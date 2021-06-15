@@ -4,6 +4,9 @@ import LaunchPage from "./presentation/pages/LaunchPage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import NavBar from "./presentation/components/Navbar/NavBar";
 import Footer from "./presentation/components/Footer/Footer";
+
+import "./app.css";
+
 function App() {
   const [redirect, setRedirect] = useState(true);
   useEffect(() => {
@@ -14,7 +17,7 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
   return (
-    <div className="App">
+    <div className="app">
       <Router>
         <NavBar />
         <Switch>

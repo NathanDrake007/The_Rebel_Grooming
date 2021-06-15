@@ -2,26 +2,26 @@ import React from "react";
 import "./footer.css";
 function Footer() {
   return (
-    <footer className="footer">
+    <footer className="footer container-fluid bg-dark text-light">
       <div className="footer-banner">
-        <img src="" alt="logo" className="footer-logo" />
+        <img src="pictures/Logo-1.png" alt="logo" className="footer-logo" />
         <ul>
           <li>
-            <span className=""></span>
+            <i class="fab fa-facebook"></i>
           </li>
           <li>
-            <span className=""></span>
+            <i class="fab fa-twitter"></i>
           </li>
           <li>
-            <span className=""></span>
+            <i class="fab fa-instagram"></i>
           </li>
         </ul>
       </div>
       <div className="footer-content">
         <div className="footer-item">
-          <h3>INFORMATION</h3>
-          <hr />
           <ul>
+            <h3>INFORMATION</h3>
+            <hr />
             <li>Contact Us</li>
             <li>Store Locator</li>
             <li>Terms & Conditions</li>
@@ -31,9 +31,9 @@ function Footer() {
           </ul>
         </div>
         <div className="footer-item">
-          <h3>CUSTOMER CARE</h3>
-          <hr />
           <ul>
+            <h3>CUSTOMER CARE</h3>
+            <hr />
             <li>Contact Us</li>
             <li>Store Locator</li>
             <li>Terms & Conditions</li>
@@ -43,11 +43,17 @@ function Footer() {
           </ul>
         </div>
         <div className="footer-item">
-          <h3>NEWSLETTER</h3>
-          <hr />
           <form>
-            <input type="text" placeholder="Your Email Address" />
-            <button type="submit">SIGN UP</button>
+            <h3>NEWSLETTER</h3>
+            <hr />
+            <div className="footer-input">
+              <i class="fa fa-envelope icon"></i>
+              <input type="text" placeholder="Your Email Address" />
+              <span></span>
+            </div>
+            <button type="button" class="btn footer-button">
+              SIGN UP
+            </button>
           </form>
         </div>
       </div>
