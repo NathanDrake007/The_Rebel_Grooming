@@ -8,3 +8,46 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+@font-face {
+  font-family: "WEST";
+  src: local("WEST"), url("./fonts/WEST.woff") format("woff");
+}
+@font-face {
+  font-family: "Bonzer";
+  src: local("Bonzer"), url("./fonts/Bonzer.woff") format("woff");
+}
+
+* {
+  margin: 0px;
+}
+
+p,
+a,
+LINK,
+li,
+button {
+  font-family: "Bonzer";
+}
+h1,
+h3 {
+  font-family: "WEST";
+  font-weight: lighter;
+}
+html {
+  height: 100vh;
+}
+body {
+  background-color: #765a43;
+}
+
+/* Utilities */
+.button-1 {
+  background-color: brown;
+  font-size: 32px;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}

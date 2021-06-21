@@ -1,0 +1,44 @@
+#hair {
+  height: 100vh;
+  display: flex;
+  justify-content: space-between;
+}
+.hairProduct-1 {
+  background-image: url("https://cdn-a.william-reed.com/var/wrbm_gb_food_pharma/storage/images/publications/cosmetics/cosmeticsdesign-europe.com/article/2020/01/22/male-beauty-brand-war-paint-wants-to-overhaul-stigma-and-mainstream-make-up-for-men/10622219-7-eng-GB/Male-beauty-brand-War-Paint-wants-to-overhaul-stigma-and-mainstream-make-up-for-men.jpg");
+  color: white;
+}
+.hairProduct-2 {
+  background-image: url("/src/pictures/product-1.jpeg");
+  color: black;
+}
+.hairProduct-banner {
+  background-repeat: no-repeat;
+  background-position: center;
+  margin: 20px;
+  background-size: cover;
+  width: 50vw;
+}
+.hairProduct-content {
+  margin-top: 100px;
+  text-align: center;
+}
+.hairProduct-content h1 {
+  font-size: 48px;
+}
+
+.hairProduct-content p {
+  width: 500px;
+  margin-left: 120px;
+  font-size: xx-large;
+  margin-bottom: 20px;
+}
+.hairButton-style-1 {
+  text-decoration: none;
+  color: #1a76d1;
+  margin-right: 20px;
+  font-size: x-large;
+  text-align: center;
+}
+.hairButton-style-1:hover {
+  text-decoration: underline solid #1a76d1 5px;
+}
