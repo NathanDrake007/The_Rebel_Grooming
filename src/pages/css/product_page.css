@@ -1,0 +1,10 @@
+.productPage {
+}
+
+.feature {
+  display: flex;
+  justify-content: space-evenly;
+}
+.right {
+  flex-direction: row-reverse;
+}

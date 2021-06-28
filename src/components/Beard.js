@@ -4,7 +4,7 @@ import "./css/beard.css";
 function Beard() {
   return (
     <section id="beard">
-      <div className="hairProduct-1 hairProduct-banner">
+      <Link className="hairProduct-1 hairProduct-banner">
         <div className="hairProduct-content">
           <h1>Beard Oil</h1>
           <p>
@@ -18,7 +18,7 @@ function Beard() {
             Buy Now <i class="fas fa-chevron-right"></i>
           </Link>
         </div>
-      </div>
+      </Link>
       <div className="hairProduct-2 hairProduct-banner">
         <div className="hairProduct-content">
           <h1>Beard Wax</h1>
