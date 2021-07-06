@@ -1,19 +1,32 @@
-import React from "react";
-import Hair from "../components/Hair";
-import Intro from "../components/Intro";
-import Face from "../components/Face";
-import Beard from "../components/Beard";
-import "./page.css";
-function HomePage() {
-  return (
-    <div className="homePage">
-      <div className="homePage-banner"></div>
-      <Intro />
-      <Hair />
-      <Face />
-      <Beard />
-    </div>
-  );
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import Banner from "../components/Banner";
+import "./css/home_page.css";
+import data from "../helper/data";
+import Product from "../components/Product";
+class HomePage extends Component {
+  render() {
+    console.log("user >> ", this.props.isSignedIn);
+    return (
+      <div className="homePage">
+        <Banner
+          title="Rebel Gromming"
+          description="Sint et irure sunt aute officia mollit. Sint veniam sint amet minim sunt duis incididunt minim laborum laborum. Do duis ad quis ea consequat."
+        />
+        <div class="row no-gutters products-grid">
+          {data.map((product) => (
+            <Product
+              title={product.title}
+              description={product.description}
+              image={product.image}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
 }
-
-export default HomePage;
+const mapStateToProps = (state) => {
+  return { isSignedIn: state.auth.isSignedIn };
+};
+export default connect(mapStateToProps)(HomePage);

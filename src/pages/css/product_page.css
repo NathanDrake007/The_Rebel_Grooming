@@ -3,8 +3,16 @@
 
 .feature {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  margin-bottom: 50px;
+  align-items: center;
 }
 .right {
   flex-direction: row-reverse;
+}
+.feature-image {
+  width: 700px;
+}
+.feature p {
+  font-size: 24px;
 }

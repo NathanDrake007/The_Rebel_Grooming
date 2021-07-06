@@ -1,25 +1,14 @@
-.navbar {
-  height: 70px;
-  width: 100vw;
-  background-color: #333333;
-  color: white;
+.navbar.navbar-dark.navbar-expand-md.fixed-top.bg-dark {
+  background-color: #000 !important;
+  opacity: 0.8;
 }
-.navbar-main {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 1000px;
-  margin-left: 300px;
+
+.navbar-dark .navbar-nav .nav-link {
+  color: #fff;
+  font-size: 13px;
 }
-.navbar-link {
-  text-decoration: none;
-  color: lightgrey;
-  font-size: 20px;
-}
-.navbar-logo {
-  width: 50px;
-  object-fit: contain;
-}
-.navbar-item {
-  text-decoration: none;
+
+.navbar-dark .navbar-nav .nav-link .apple-logo {
+  font-size: 21px;
+  line-height: 0;
 }

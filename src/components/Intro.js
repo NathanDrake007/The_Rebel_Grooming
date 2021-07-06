@@ -17,7 +17,7 @@ function Intro() {
         </p>
       </div>
       <div className="intro-banner">
-        <div className="banner-content">
+        <div className="introBanner-content">
           <h1>Formulated For Guys, By Guys</h1>
           <p>
             Rebel Grooming products are formulated based on the input of

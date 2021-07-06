@@ -1,11 +1,13 @@
 import React from "react";
-
+import bg from "../assets/pictures/banner.jpeg";
+import "./css/banner.css";
 function Banner({ title, description }) {
   return (
-    <div className="banner">
+    <section className="product">
       <h1>{title}</h1>
-      <p>{description}</p>
-    </div>
+      <h2>{description}</h2>
+      <img className="img-fluid" src={bg} />
+    </section>
   );
 }
 

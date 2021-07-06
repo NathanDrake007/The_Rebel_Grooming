@@ -11,11 +11,11 @@
 
 @font-face {
   font-family: "WEST";
-  src: local("WEST"), url("./fonts/WEST.woff") format("woff");
+  src: local("WEST"), url("./assets/fonts/WEST.woff") format("woff");
 }
 @font-face {
   font-family: "Bonzer";
-  src: local("Bonzer"), url("./fonts/Bonzer.woff") format("woff");
+  src: local("Bonzer"), url("./assets/fonts/Bonzer.woff") format("woff");
 }
 
 * {
@@ -30,6 +30,7 @@ button {
   font-family: "Bonzer";
 }
 h1,
+h2,
 h3 {
   font-family: "WEST";
   font-weight: lighter;
@@ -38,7 +39,8 @@ html {
   height: 100vh;
 }
 body {
-  background-color: #765a43;
+  background-color: #c29d32;
+  padding-top: 50px;
 }
 
 /* Utilities */

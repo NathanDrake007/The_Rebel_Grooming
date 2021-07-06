@@ -1,29 +1,29 @@
 import React from "react";
+import data from "../helper/data";
 import Banner from "../components/Banner";
-function ProductPage() {
+
+import "./css/product_page.css";
+function ProductPage(props) {
+  console.log(props);
+  const product = data.find((item) => item.id === props.match.params.id);
   return (
     <div className="productPage">
-      <Banner
-        title="Lip Balm"
-        description={
-          "Reprehenderit cillum fugiat ipsum nostrud reprehenderit cillum Lorem sint fugiat eiusmod ullamco mollit sint. Ipsum laborum sit in minim sit deserunt reprehenderit cillum qui tempor laboris aliqua qui sint. Exercitation anim velit aliquip aliquip veniam exercitation anim sit. Sunt fugiat ullamco elit ullamco cupidatat exercitation aliquip magna pariatur Lorem pariatur mollit duis irure. Sint mollit elit aute ex. Eiusmod officia nulla reprehenderit amet exercitation voluptate deserunt."
-        }
-      />
+      <Banner title={product.title} description={product.description} />
       <div className="feature">
-        <img src="" alt="feature-1" />
-        <p></p>
+        <img src={product.image} alt="feature-1" className="feature-image" />
+        <p>{product.feature1}</p>
       </div>
       <div className="feature right">
-        <img src="" alt="feature-1" />
-        <p></p>
+        <img src={product.image} alt="feature-1" className="feature-image" />
+        <p>{product.feature2}</p>
       </div>
       <div className="feature">
-        <img src="" alt="feature-1" />
-        <p></p>
+        <img src={product.image} alt="feature-1" className="feature-image" />
+        <p>{product.feature3}</p>
       </div>
       <div className="feature right">
-        <img src="" alt="feature-1" />
-        <p></p>
+        <img src={product.image} alt="feature-1" className="feature-image" />
+        <p>{product.feature4}</p>
       </div>
     </div>
   );
