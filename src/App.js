@@ -11,6 +11,7 @@ import SignInPage from "./pages/SigninPage";
 
 import "./app.css";
 import { auth } from "./helper/firebase";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 const initalState = {
   redirect: false,
   currentUser: null,
@@ -61,6 +62,7 @@ class App extends Component {
               <Route path="/product/:id" component={ProductPage} />
               <Route path="/signup" component={SignupPage} />
               <Route path="/signin" component={SignInPage} />
+              <Route path="/recovery" component={ResetPasswordPage} />
             </Switch>
           </ScrollToTop>
           <Footer />
