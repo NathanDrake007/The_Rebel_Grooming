@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { signIn } from "../redux/actions";
+import { signIn } from "../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import "./css/signin_page.css";
 function SignInPage(props) {

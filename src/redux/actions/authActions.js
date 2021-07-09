@@ -1,4 +1,12 @@
 import { auth } from "../../helper/firebase";
+import history from "../../helper/history";
+
+export const setUser = (userId) => {
+  return {
+    type: "SET_USER",
+    payload: userId,
+  };
+};
 export const signIn =
   ({ email, password }) =>
   (dispatch, getState) => {
@@ -7,6 +15,7 @@ export const signIn =
       .then((userCredential) => {
         var userId = userCredential.user;
         dispatch({ type: "SIGN_IN", payload: userId });
+        history.push("/");
       })
       .catch((error) => {
         var errorMessage = error.message;
@@ -22,6 +31,7 @@ export const signUp =
       .then((userCredential) => {
         var userId = userCredential.user;
         dispatch({ type: "SIGN_UP", payload: userId });
+        history.push("/");
       })
       .catch((error) => {
         var errorMessage = error.message;
@@ -29,11 +39,8 @@ export const signUp =
       });
   };
 export const signOut = () => {
+  alert("signed out successfully");
   return {
     type: "SIGN_OUT",
   };
-};
-
-export const placeOrder = (payload) => (dispatch, getState) => {
-  dispatch({ type: "PLACE_ORDER", payload });
 };

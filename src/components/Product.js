@@ -1,7 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import { addToCart } from "../redux/actions/cartActions";
 import "./css/product.css";
-function Product({ title, description, image }) {
+function Product(props) {
+  const { title, image, id, description } = props.product;
+  const url = `/product/${id}`;
+  const handleBuy = () => {
+    props.addToCart({ userId: props.userId, product: { id, quantity: 1 } });
+    console.log({ userId: props.userId, product: title });
+  };
   return (
     <div className="col-md-6">
       <div
@@ -16,16 +24,21 @@ function Product({ title, description, image }) {
         <h3>{title}</h3>
         <h4>{description}</h4>
         <div class="links small-link-margin">
-          <Link className="learn-more">
+          <Link to={url} className="learn-more">
             Learn more &nbsp;<i class="fa fa-angle-right"></i>
           </Link>
-          <Link>
+          <span
+            onClick={handleBuy}
+            style={{ cursor: "pointer", color: "blue" }}
+          >
             Buy&nbsp;<i class="fa fa-angle-right"></i>
-          </Link>
+          </span>
         </div>
       </div>
     </div>
   );
 }
-
-export default Product;
+const mapStateToProps = (state) => {
+  return { userId: state.auth.userId };
+};
+export default connect(mapStateToProps, { addToCart })(Product);

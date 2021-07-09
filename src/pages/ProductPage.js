@@ -1,32 +1,50 @@
-import React from "react";
-import data from "../helper/data";
+import React, { useState, useEffect } from "react";
+import { firestore } from "../helper/firebase";
 import Banner from "../components/Banner";
 
 import "./css/product_page.css";
 function ProductPage(props) {
-  console.log(props);
-  const product = data.find((item) => item.id === props.match.params.id);
-  return (
-    <div className="productPage">
-      <Banner title={product.title} description={product.description} />
-      <div className="feature">
-        <img src={product.image} alt="feature-1" className="feature-image" />
-        <p>{product.feature1}</p>
+  const [product, setProduct] = useState(null);
+  useEffect(() => {
+    async function fetchProducts() {
+      await firestore
+        .collection("products")
+        .doc(props.match.params.id)
+        .get()
+        .then((doc) => {
+          setProduct(doc.data());
+        })
+        .catch((error) => {
+          console.log("Error getting document:", error);
+        });
+    }
+    fetchProducts();
+  }, [props.match.params.id]);
+
+  const renderPage = () => {
+    return (
+      <div className="productPage">
+        <Banner title={product.title} description={product.feature} />
+        <div className="feature">
+          <img src={product.image} alt="feature-1" className="feature-image" />
+          <p>{product.description_1}</p>
+        </div>
+        <div className="feature right">
+          <img src={product.image} alt="feature-1" className="feature-image" />
+          <p>{product.description_2}</p>
+        </div>
+        <div className="feature">
+          <img src={product.image} alt="feature-1" className="feature-image" />
+          <p>{product.description_3}</p>
+        </div>
+        <div className="feature right">
+          <img src={product.image} alt="feature-1" className="feature-image" />
+          <p>{product.description_4}</p>
+        </div>
       </div>
-      <div className="feature right">
-        <img src={product.image} alt="feature-1" className="feature-image" />
-        <p>{product.feature2}</p>
-      </div>
-      <div className="feature">
-        <img src={product.image} alt="feature-1" className="feature-image" />
-        <p>{product.feature3}</p>
-      </div>
-      <div className="feature right">
-        <img src={product.image} alt="feature-1" className="feature-image" />
-        <p>{product.feature4}</p>
-      </div>
-    </div>
-  );
+    );
+  };
+  return product ? renderPage() : <div>Loading......</div>;
 }
 
 export default ProductPage;

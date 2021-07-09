@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { signUp } from "../redux/actions";
+import { signUp } from "../redux/actions/authActions";
 
 import "./css/signin_page.css";
 
@@ -16,7 +16,6 @@ function SignUpPage(props) {
       password,
       confirmPassword,
     });
-    console.log(this.state);
   };
   return (
     <div className="signInPage">

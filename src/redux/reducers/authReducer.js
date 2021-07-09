@@ -13,6 +13,13 @@ const authReducer = (state = initalState, action) => {
         userId: null,
         authError: action.payload,
       };
+    case "SET_USER":
+      return {
+        ...state,
+        isSignedIn: true,
+        userId: action.payload,
+        authError: null,
+      };
     case "SIGN_IN":
       return {
         ...state,

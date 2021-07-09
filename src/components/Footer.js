@@ -7,16 +7,16 @@ function Footer() {
       <div className="container d-flex d-sm-flex d-xxl-flex flex-column align-items-center align-items-sm-center justify-content-xxl-center align-items-xxl-center">
         <img className="img-fluid" src={logo} width="100px" alt="logo" />
         <div className="social-icons text-white">
-          <a className="me-4 text-white fs-3">
+          <a href="https://twitter.com" className="me-4 text-white fs-3">
             <i className="icon fab fa-twitter"></i>
           </a>
-          <a className="me-4 text-white fs-3">
+          <a href="https://twitter.com" className="me-4 text-white fs-3">
             <i className="icon fab fa-facebook"></i>
           </a>
-          <a className="me-4 text-white fs-3">
+          <a href="https://twitter.com" className="me-4 text-white fs-3">
             <i className="icon fab fa-instagram"></i>
           </a>
-          <a className="me-4 text-white fs-3">
+          <a href="https://twitter.com" className="me-4 text-white fs-3">
             <i className="icon fab fa-youtube"></i>
           </a>
         </div>

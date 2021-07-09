@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import AnchorLink from "react-anchor-link-smooth-scroll";
 import logo from "../assets/pictures/logo.png";
 import "./css/navbar.css";
-import { signOut } from "../redux/actions";
+import { signOut } from "../redux/actions/authActions";
 import { connect } from "react-redux";
 function NavBar(props) {
   return (
@@ -73,7 +73,9 @@ function NavBar(props) {
               </span>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <Link className="dropdown-item">Orders</Link>
+                  <Link to="/cart" className="dropdown-item">
+                    Cart
+                  </Link>
                 </li>
                 <li>
                   {props.isSignedIn ? (
