@@ -1,33 +1,22 @@
 const initalState = {
-  userId: null,
   products: [],
 };
 
 const orderReducer = (state = initalState, action) => {
-  var newCart, index;
   switch (action.type) {
     case "ADD_TO_CART":
-      newCart = [...state.products, action.payload.product];
-      return { ...state, userId: action.payload.userId, products: newCart };
+      return { ...state, products: action.payload };
+    case "SET_CART":
+      return { ...state, products: action.payload };
     case "INCREASE_QUANTITY":
-      index = state.products.findIndex(
-        (_product) => _product.id === action.payload
-      );
-      newCart = [...state.products];
-      newCart[index].quantity += 1;
       return {
         ...state,
-        products: newCart,
+        products: action.payload,
       };
     case "DECREASE_QUANTITY":
-      index = state.products.findIndex(
-        (_product) => _product.id === action.payload
-      );
-      newCart = [...state.products];
-      newCart[index].quantity -= 1;
       return {
         ...state,
-        products: newCart,
+        products: action.payload,
       };
     default:
       return state;

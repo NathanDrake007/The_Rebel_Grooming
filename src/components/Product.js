@@ -7,7 +7,7 @@ function Product(props) {
   const { title, image, id, description } = props.product;
   const url = `/product/${id}`;
   const handleBuy = () => {
-    props.addToCart({ userId: props.userId, product: { id, quantity: 1 } });
+    props.addToCart({ ...props.product, quantity: 1 });
     console.log({ userId: props.userId, product: title });
   };
   return (

@@ -9,32 +9,10 @@
   scrollbar-width: none; /* Firefox */
 }
 
-@font-face {
-  font-family: "WEST";
-  src: local("WEST"), url("./assets/fonts/WEST.woff") format("woff");
-}
-@font-face {
-  font-family: "Bonzer";
-  src: local("Bonzer"), url("./assets/fonts/Bonzer.woff") format("woff");
-}
-
 * {
   margin: 0px;
 }
 
-p,
-a,
-LINK,
-li,
-button {
-  font-family: "Bonzer";
-}
-h1,
-h2,
-h3 {
-  font-family: "WEST";
-  font-weight: lighter;
-}
 html {
   height: 100vh;
 }

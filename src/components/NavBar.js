@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import AnchorLink from "react-anchor-link-smooth-scroll";
 import logo from "../assets/pictures/logo.png";
 import "./css/navbar.css";
 import { signOut } from "../redux/actions/authActions";
@@ -31,25 +30,9 @@ function NavBar(props) {
               </Link>
             </li>
             <li className="nav-item">
-              <AnchorLink className="nav-link">
-                <Link to="/" className="text-decoration-none text-white">
-                  HAIR
-                </Link>
-              </AnchorLink>
-            </li>
-            <li className="nav-item">
-              <AnchorLink className="nav-link">
-                <Link to="/" className="text-decoration-none text-white">
-                  FACE
-                </Link>
-              </AnchorLink>
-            </li>
-            <li className="nav-item">
-              <AnchorLink className="nav-link">
-                <Link to="/" className="text-decoration-none text-white">
-                  BEARD
-                </Link>
-              </AnchorLink>
+              <Link to="/about" className="nav-link text-white">
+                About Us
+              </Link>
             </li>
             <li className="nav-item">
               <Link to="/blog" className="nav-link text-white">
@@ -73,8 +56,8 @@ function NavBar(props) {
               </span>
               <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
                 <li>
-                  <Link to="/cart" className="dropdown-item">
-                    Cart
+                  <Link to="/orders" className="dropdown-item">
+                    Orders
                   </Link>
                 </li>
                 <li>

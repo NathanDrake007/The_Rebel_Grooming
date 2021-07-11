@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from "react";
 import { firestore } from "../helper/firebase";
+import { setCart } from "../redux/actions/cartActions";
 import { connect } from "react-redux";
 import ProductListItem from "../components/ProductListItem";
+import { Link } from "react-router-dom";
 import "./css/cart_page.css";
 function CartPage(props) {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     async function fetchProducts() {
-      var temp = [];
-      await firestore
-        .collection("products")
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            for (let _pro in props.products) {
-              const _product = props.products[_pro];
-              if (_product.id === doc.id) {
-                const { title, feature, price, image } = doc.data();
-                temp.push({
-                  title,
-                  feature,
-                  price,
-                  image,
-                  quantity: _product.quantity,
-                  id: doc.id,
-                });
-                break;
-              }
+      console.log("call");
+      if (props.isSignedIn) {
+        await firestore
+          .collection("cart")
+          .doc(props.userId)
+          .get()
+          .then((querySnapshot) => {
+            const data = querySnapshot.data().products;
+            if (products.length === 0) {
+              props.setCart(data);
             }
+            setProducts(data);
           });
-        });
-      setProducts(temp);
+      } else {
+        setProducts(props.products);
+      }
     }
     fetchProducts();
+    // eslint-disable-next-line
   }, [props]);
   const totalPrice = () => {
     var sum = 0;
@@ -41,8 +36,8 @@ function CartPage(props) {
     );
     return sum;
   };
-  return (
-    <div className="card mx-auto">
+  const renderCart = () => {
+    return (
       <div className="row">
         <div className="col-md-8 cart">
           <div className="title">
@@ -115,10 +110,42 @@ function CartPage(props) {
           <button className="cartBtn">CHECKOUT</button>
         </div>
       </div>
+    );
+  };
+  const renderEmptyCart = () => {
+    return (
+      <div className="text-center p-5">
+        <h1 className="fs-1">Your Cart Empty.</h1>
+        {!props.isSignedIn ? (
+          <>
+            <h5 className="fs-5 fw-light">
+              Sign in to see if you have any saved items. Or continue shopping.
+              Sign In
+            </h5>
+            <Link to="/signin" className="btn btn-primary m-4 btn-lg">
+              Sign In
+            </Link>
+          </>
+        ) : (
+          <h5 className="fs-5 fw-light">continue shopping.</h5>
+        )}
+        <Link to="/" className="btn btn-secondary btn-lg">
+          Continue Shopping
+        </Link>
+      </div>
+    );
+  };
+  return (
+    <div className="card mx-auto">
+      {products.length === 0 ? renderEmptyCart() : renderCart()}
     </div>
   );
 }
 const mapStateToProps = (state) => {
-  return { products: state.cart.products };
+  return {
+    products: state.cart.products,
+    isSignedIn: state.auth.isSignedIn,
+    userId: state.auth.userId,
+  };
 };
-export default connect(mapStateToProps, null)(CartPage);
+export default connect(mapStateToProps, { setCart })(CartPage);
