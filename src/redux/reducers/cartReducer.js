@@ -1,13 +1,28 @@
 const initalState = {
   products: [],
+  totalPrice: 0.0,
 };
 
-const orderReducer = (state = initalState, action) => {
+const cartReducer = (state = initalState, action) => {
   switch (action.type) {
     case "ADD_TO_CART":
-      return { ...state, products: action.payload };
-    case "SET_CART":
-      return { ...state, products: action.payload };
+      return {
+        ...state,
+        products: action.payload.cart,
+        totalPrice: action.payload.price,
+      };
+    case "REMOVE_FROM_CART":
+      return {
+        ...state,
+        products: action.payload.cart,
+        totalPrice: action.payload.price,
+      };
+    case "CLEAR_CART":
+      return {
+        ...state,
+        products: [],
+        totalPrice: 0,
+      };
     case "INCREASE_QUANTITY":
       return {
         ...state,
@@ -22,4 +37,4 @@ const orderReducer = (state = initalState, action) => {
       return state;
   }
 };
-export default orderReducer;
+export default cartReducer;

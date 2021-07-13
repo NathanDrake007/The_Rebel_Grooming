@@ -1,5 +1,5 @@
-import { auth } from "../../helper/firebase";
-import history from "../../helper/history";
+import { auth } from "../../utils/firebase";
+import history from "../../utils/history";
 
 export const setUser = (userId) => {
   return {
