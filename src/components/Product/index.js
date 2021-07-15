@@ -5,10 +5,10 @@ import { addToCart } from "../../redux/actions/cartActions";
 
 import "./product.css";
 function Product(props) {
-  const { title, image, id, description } = props.product;
+  const { title, image, id, description_1, feature, price } = props.product;
   const url = `/product/${id}`;
   const handleBuy = () => {
-    props.addToCart({ ...props.product, quantity: 1 });
+    props.addToCart({ title, image, id, feature, price, quantity: 1 });
     console.log({ userId: props.userId, product: title });
   };
   return (
@@ -17,22 +17,22 @@ function Product(props) {
         className="product-small"
         style={{
           backgroundImage: `url(${image})`,
-          backgroundPosition: "top",
+          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
         }}
       >
         <h3>{title}</h3>
-        <h4>{description}</h4>
-        <div class="links small-link-margin">
+        <h4>{description_1}</h4>
+        <div className="links small-link-margin">
           <Link to={url} className="learn-more">
-            Learn more &nbsp;<i class="fa fa-angle-right"></i>
+            Learn more &nbsp;<i className="fa fa-angle-right"></i>
           </Link>
           <span
             onClick={handleBuy}
-            style={{ cursor: "pointer", color: "blue" }}
+            style={{ cursor: "pointer", color: "burlywood" }}
           >
-            Buy&nbsp;<i class="fa fa-angle-right"></i>
+            Buy&nbsp;<i className="fa fa-angle-right"></i>
           </span>
         </div>
       </div>

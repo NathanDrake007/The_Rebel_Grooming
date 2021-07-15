@@ -1,14 +1,17 @@
 import React from "react";
-import bg from "../../assets/pictures/banner.jpeg";
 
 import "./banner.css";
 
 function Banner({ title, description }) {
   return (
-    <section className="product">
-      <h1>{title}</h1>
-      <h2>{description}</h2>
-      <img className="img-fluid" src={bg} alt="banner" />
+    <section className="banner">
+      <div className="container-fluid">
+        <img
+          className="img-fluid"
+          src="https://firebasestorage.googleapis.com/v0/b/rebel-grooming.appspot.com/o/Banners%2FLanding%20page.png?alt=media&token=4bea6c71-5fda-41aa-86f0-05cc1751620c"
+          alt="banner"
+        />
+      </div>
     </section>
   );
 }

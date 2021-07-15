@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 
 // pages
 import HomePage from "./pages/HomePage";
-import LaunchPage from "./pages/LaunchPage";
 import ProductPage from "./pages/ProductPage";
 import ScrollToTop from "./utils/ScrollToTop";
 import SignupPage from "./pages/SignupPage";
 import SignInPage from "./pages/SigninPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import OrdersPage from "./pages/OrdersPage";
+import OrderPage from "./pages/OrderPage";
 import CartPage from "./pages/CartPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import "./app.css";
@@ -35,7 +34,6 @@ import { publishableKey } from "./utils/stripeConfig";
 const stripePromise = loadStripe(publishableKey);
 
 function App(props) {
-  const [redirect, setRedirect] = useState(false);
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
@@ -55,15 +53,11 @@ function App(props) {
             <Route
               exact
               path="/"
-              render={() =>
-                redirect ? (
-                  <MainLayout>
-                    <HomePage />
-                  </MainLayout>
-                ) : (
-                  <LaunchPage setRedirect={setRedirect} />
-                )
-              }
+              render={() => (
+                <MainLayout>
+                  <HomePage />
+                </MainLayout>
+              )}
             />
             <Route
               path="/product/:id"
@@ -121,7 +115,7 @@ function App(props) {
               render={() => (
                 <Elements stripe={stripePromise}>
                   <MainLayout>
-                    <OrdersPage />
+                    <OrderPage />
                   </MainLayout>
                 </Elements>
               )}

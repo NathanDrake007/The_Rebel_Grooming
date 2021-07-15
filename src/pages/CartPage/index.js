@@ -33,11 +33,7 @@ function CartPage(props) {
             />
           ))}
           <div className="back-to-shop">
-            <button
-              onClick={() => history.goBack()}
-              className="cartAnchor"
-              href="#"
-            >
+            <button onClick={() => history.goBack()} className="cartAnchor">
               <i class="fas fa-arrow-left"></i>
             </button>
             <span className="text-muted">Back to shop</span>

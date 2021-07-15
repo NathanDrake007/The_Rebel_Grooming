@@ -61,6 +61,8 @@
 
 .product-small .links .learn-more {
   margin-right: 20px;
+  text-decoration: none;
+  color: burlywood;
 }
 
 @media (min-width: 576px) {
@@ -94,7 +96,7 @@
 }
 
 .product-small {
-  height: 550px;
+  height: 70vh;
   padding-top: 40px;
   margin: 0 0 10px 0;
   text-align: center;
