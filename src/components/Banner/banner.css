@@ -1,4 +1,7 @@
 .banner {
-  margin-top: -60px;
   margin-bottom: 50px;
+}
+.banner-image {
+  max-height: 90vh;
+  width: 100vw;
 }

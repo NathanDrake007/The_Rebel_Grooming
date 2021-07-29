@@ -19,7 +19,7 @@ function Footer() {
               <form className="newsletter">
                 <input type="text" placeholder="Email Address" />
                 <button className="newsletter_submit_btn" type="submit">
-                  <i class="fas fa-paper-plane"></i>
+                  <i className="fas fa-paper-plane"></i>
                 </button>
               </form>
             </div>
@@ -77,7 +77,7 @@ function Footer() {
                 <div className="footer-logo">
                   <img src={logo} alt="logo" width="75" />
                 </div>
-                <p>Laborum nostrud ex esse sit exercitation reprehenderit.</p>
+                <p>BAD ASS BUT ORGANIC</p>
               </div>
               <div className="col-md-2 col-sm-6">
                 <h3>Quick LInks</h3>
@@ -89,52 +89,13 @@ function Footer() {
                     <Link>About us</Link>
                   </li>
                   <li>
-                    <Link>Triedge Partners</Link>
-                  </li>
-                  <li>
                     <Link>Contact Us</Link>
                   </li>
                   <li>
-                    <Link target="_blank">Terms &amp; Conditions</Link>
+                    <Link to="/">Terms &amp; Conditions</Link>
                   </li>
                   <li>
-                    <Link target="_blank">Privacy Policy</Link>
-                  </li>
-                  <li>
-                    <Link>Sitemap</Link>
-                  </li>
-                </ul>
-              </div>
-              <div className="col-md-3 col-sm-6">
-                <h3>OUR SERVICES</h3>
-                <ul className="footer-category">
-                  <li>
-                    <Link>Fresher Jobs</Link>
-                  </li>
-                  <li>
-                    <Link>InternEdge - Internships &amp; Projects </Link>
-                  </li>
-                  <li>
-                    <Link>Resume Edge - Resume Writing Services</Link>
-                  </li>
-                  <li>
-                    <Link>Readers Galleria - Curated Library</Link>
-                  </li>
-                  <li>
-                    <Link>Trideus - Campus Ambassadors</Link>
-                  </li>
-                </ul>
-                <div className="clearfix"></div>
-              </div>
-              <div className="col-md-3 col-sm-6">
-                <h3>triedge Events</h3>
-                <ul className="footer-links">
-                  <li>
-                    <Link>Triedge Events</Link>
-                  </li>
-
-                  <li>
-                    <Link>Jobs &AMP; Internship Fair 2019</Link>
+                    <Link to="/">Privacy Policy</Link>
                   </li>
                 </ul>
               </div>

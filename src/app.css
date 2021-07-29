@@ -17,8 +17,9 @@ html {
   height: 100vh;
 }
 body {
-  background-color: #c29d32;
-  padding-top: 50px;
+  /* background-color: #ffb647; */
+  background-color: #bb843c;
+  margin-top: 45px;
 }
 
 /* Utilities */

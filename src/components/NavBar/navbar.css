@@ -1,6 +1,6 @@
 .navbar.navbar-dark.navbar-expand-md.fixed-top.bg-dark {
-  background-color: #000 !important;
-  opacity: 0.8;
+  background-color: #333 !important;
+  opacity: 1;
 }
 
 .navbar-dark .navbar-nav .nav-link {

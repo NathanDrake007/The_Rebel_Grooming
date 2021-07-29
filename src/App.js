@@ -59,15 +59,7 @@ function App(props) {
                 </MainLayout>
               )}
             />
-            <Route
-              path="/product/:id"
-              component={ProductPage}
-              render={() => (
-                <MainLayout>
-                  <ProductPage />
-                </MainLayout>
-              )}
-            />
+            <Route path="/product/:id" component={ProductPage} />
             <Route
               path="/signup"
               render={() => (
