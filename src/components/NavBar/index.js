@@ -8,7 +8,7 @@ import "./navbar.css";
 
 function NavBar(props) {
   return (
-    <nav className="navbar navbar-dark navbar-expand-md fixed-top bg-dark">
+    <nav className="navbar navbar-expand-md">
       <div className="container">
         <button
           data-bs-toggle="collapse"
@@ -19,36 +19,40 @@ function NavBar(props) {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navcol-1">
-          <ul className="navbar-nav flex-grow-1 justify-content-between">
+          <ul className="navbar-nav align-items-center">
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/">
+              <Link className="nav-link nav-text" to="/">
                 <img
                   className="rounded-circle img-fluid"
                   src={logo}
-                  width="25"
-                  height="25"
+                  width="100"
                   alt="logo"
                 />
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link text-white">
-                About Us
+              <Link to="/" className="nav-text nav-link">
+                HOME
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/blog" className="nav-link text-white">
+              <Link to="/about" className="nav-text nav-link">
+                ABOUT
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/blog" className="nav-link nav-text">
                 BLOG
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-white" to="/cart">
+              <Link className="nav-link nav-text" to="/cart">
                 <i className="fa fa-shopping-bag"></i>
               </Link>
             </li>
-            <li className="nav-item dropdown">
+            <li className="nav-item dropdown ">
               <span
-                className="nav-link dropdown-toggle"
+                className="nav-link dropdown-toggle nav-text"
                 id="navbarDropdown"
                 role="button"
                 data-bs-toggle="dropdown"

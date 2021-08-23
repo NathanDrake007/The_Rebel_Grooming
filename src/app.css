@@ -16,12 +16,19 @@
 html {
   height: 100vh;
 }
-body {
-  /* background-color: #ffb647; */
-  background-color: #bb843c;
-  margin-top: 45px;
+@font-face {
+  font-family: "league gothic";
+  src: local("MyFont"),
+    url(./assets/fonts/leaguegothic-regular-webfont.woff) format("woff");
 }
-
+@font-face {
+  font-family: "league gothic italic";
+  src: local("MyFont"),
+    url(./assets/fonts/leaguegothic-italic-webfont.woff) format("woff");
+}
+body {
+  font-family: "league gothic";
+}
 /* Utilities */
 .button-1 {
   background-color: brown;
