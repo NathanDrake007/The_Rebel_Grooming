@@ -1,0 +1,13 @@
+.about-container {
+  position: relative;
+}
+.wrap {
+  position: absolute;
+  top: 200px;
+  left: 100px;
+}
+.wrap-2 {
+  position: absolute;
+  top: 200px;
+  right: 100px;
+}

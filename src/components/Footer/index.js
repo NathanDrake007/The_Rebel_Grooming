@@ -1,112 +1,164 @@
 import React from "react";
-import logo from "../../assets/pictures/logo.png";
 import { Link } from "react-router-dom";
 import "./footer.css";
 function Footer() {
   return (
     <footer>
-      <div className="footer-wrap">
-        <div className="container first_class">
-          <div className="row">
-            <div className="col-md-4 col-sm-6">
-              <h3>BE THE FIRST TO KNOW</h3>
-              <p>
-                Get all the latest information on Reble Products, Posts and
-                Events. Sign up for our newsletter today.
-              </p>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <form className="newsletter">
-                <input type="text" placeholder="Email Address" />
-                <button className="newsletter_submit_btn" type="submit">
-                  <i className="fas fa-paper-plane"></i>
-                </button>
-              </form>
-            </div>
-            <div className="col-md-4 col-sm-6">
-              <div className="col-md-12">
-                <div className="standard_social_links">
-                  <div>
-                    <li className="round-btn btn-facebook">
-                      <a href="https://www.instagram.com/">
-                        <i className="fab fa-facebook-f"></i>
-                      </a>
-                    </li>
-                    <li className="round-btn btn-linkedin">
-                      <a href="https://www.instagram.com/">
-                        <i
-                          className="fab fa-linkedin-in"
-                          aria-hidden="true"
-                        ></i>
-                      </a>
-                    </li>
-                    <li className="round-btn btn-twitter">
-                      <a href="https://www.instagram.com/">
-                        <i className="fab fa-twitter" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li className="round-btn btn-instagram">
-                      <a href="https://www.instagram.com/">
-                        <i className="fab fa-instagram" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li className="round-btn btn-whatsapp">
-                      <a href="https://www.instagram.com/">
-                        <i className="fab fa-whatsapp" aria-hidden="true"></i>
-                      </a>
-                    </li>
-                    <li className="round-btn btn-envelop">
-                      <a href="https://www.instagram.com/">
-                        <i className="fa fa-envelope" aria-hidden="true"></i>
-                      </a>
-                    </li>
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12">
+            <div className="row m-5">
+              <div className="accordion d-md-flex" id="accordion">
+                <div className="col-md-4 text-white order-md-3 mt-5 mb-4">
+                  <h1>SIGN UP</h1>
+                  <h6>
+                    Sign up and be the first to know about our special offers!
+                  </h6>
+                  <form className="d-flex">
+                    <input type="email" className="form-control newsletter" />
+                    <button type="submit" className="btn w-25 button bgcolor-2">
+                      Sign up
+                    </button>
+                  </form>
+                  <div className="text-white d-none d-md-block d-xl-block mt-2">
+                    <h1>FOLLOW US ON</h1>
+                    <ul className="list-unstyled d-flex">
+                      <li>
+                        <i className="fab fa-facebook me-3 fs-3"></i>
+                      </li>
+                      <li>
+                        <i className="fab fa-instagram me-3 fs-3"></i>
+                      </li>
+                      <li>
+                        <i className="fab fa-twitter me-3 fs-3"></i>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="col-md-4 order-md-1 mt-5 mb-4">
+                  <button
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#products"
+                    className="accord-button p-0 d-block d-md-none d-xl-none"
+                    aria-expanded="true"
+                    aria-controls="products"
+                  >
+                    <div className="button-flex">
+                      <h6>PRODUCTS</h6>
+                      <i className="fas fa-chevron-down"></i>
+                    </div>
+                  </button>
+
+                  <div className="h1 text-uppercase text-white p-0 d-none d-md-block d-xl-block">
+                    PRODUCTS
+                  </div>
+                  <div
+                    className="collapse text-white d-md-flex"
+                    id="products"
+                    data-parent="#accordion"
+                  >
+                    <ul className="list-unstyled">
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          HAIR POMADE
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          HAIR PUTTY
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          BEARD GROWTH ELIXIR
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          BEARD WAX
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          LIP BALM
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          FACE GLOW CREAM
+                        </Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="col-md-4 order-md-2 mt-5 mb-4">
+                  <button
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#quick"
+                    className="accord-button p-0 d-block d-md-none d-xl-none"
+                  >
+                    <div className="button-flex">
+                      <h6>QUICK LINKS</h6>
+                      <i className="fas fa-chevron-down"></i>
+                    </div>
+                  </button>
+                  <div className="h1 text-uppercase text-white p-0 d-none d-md-block d-xl-block">
+                    QUICK LINKS
+                  </div>
+                  <div
+                    className="collapse text-white d-md-flex"
+                    id="quick"
+                    data-parent="#accordion"
+                  >
+                    <ul className="list-unstyled">
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          HOME
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          ABOUT
+                        </Link>
+                      </li>
+                      <li>
+                        <Link to="/" className="nav-link fs-5 p-0 text-white">
+                          BLOGS
+                        </Link>
+                      </li>
+                    </ul>
                   </div>
                 </div>
               </div>
-              <div className="clearfix"></div>
-              <div className="col-md-12">
-                <h3 style={{ textAlign: "right" }}>Stay Connected</h3>
-              </div>
             </div>
           </div>
-        </div>
-        <div className="second_class">
-          <div className="container second_class_bdr">
+          <div className="col-12 text-white text-center d-block d-md-none d-xl-none">
+            <h1>FOLLOW US ON</h1>
+            <ul className="list-unstyled d-flex p-3 align-items-center justify-content-center">
+              <li>
+                <i className="fab fa-facebook m-3 fs-3"></i>
+              </li>
+              <li>
+                <i className="fab fa-instagram m-3 fs-3"></i>
+              </li>
+              <li>
+                <i className="fab fa-twitter m-3 fs-3"></i>
+              </li>
+            </ul>
+          </div>
+          <div className="col-md-12 text-white text-center text-md-start">
             <div className="row">
-              <div className="col-md-4 col-sm-6">
-                <div className="footer-logo">
-                  <img src={logo} alt="logo" width="75" />
-                </div>
-                <p>BAD ASS BUT ORGANIC</p>
-              </div>
-              <div className="col-md-2 col-sm-6">
-                <h3>Quick LInks</h3>
-                <ul className="footer-links">
-                  <li>
-                    <Link>Home</Link>
-                  </li>
-                  <li>
-                    <Link>About us</Link>
-                  </li>
-                  <li>
-                    <Link>Contact Us</Link>
-                  </li>
-                  <li>
-                    <Link to="/">Terms &amp; Conditions</Link>
-                  </li>
-                  <li>
-                    <Link to="/">Privacy Policy</Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="row">
-          <div className="container-fluid">
-            <div className="copyright">
-              Copyright 2019 | All Rights Reserved by The Rebel Grooming & Co.
+              <p className="col-6 col-md-2 fs-5 order-md-2">Return Policy</p>
+              <p className="col-6 col-md-2 fs-5 order-md-3">
+                Terms and condition
+              </p>
+              <p className="col-6 col-md-2 fs-5 order-md-4">Privacy Policy</p>
+              <p className="col-6 col-md-2 fs-5 order-md-5">Refund Policy</p>
+              <p className="col-12 col-md-4 fs-5 text-white order-md-1">
+                2021 The Rebel Grooming Co
+              </p>
             </div>
           </div>
         </div>

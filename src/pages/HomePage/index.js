@@ -3,19 +3,14 @@ import { connect } from "react-redux";
 import Banner from "../../components/Banner";
 import Product from "../../components/Product";
 import { firestore } from "../../utils/firebase";
-import "./home_page.css";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import highlights from "../../assets/pictures/brand-highlights.jpg";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-}));
+import bannerImage from "../../assets/pictures/homeBanner.jpg";
+import displayHeading2 from "../../assets/pictures/displayHeading-2.jpg";
+import displayHeading1 from "../../assets/pictures/displayHeading-1.jpg";
 
 function HomePage(props) {
   const [products, setProducts] = useState([]);
-  const classes = useStyles();
   useEffect(() => {
     async function fetchProducts() {
       var temp = [];
@@ -39,21 +34,23 @@ function HomePage(props) {
       <Banner
         title="Rebel Gromming"
         description="Sint et irure sunt aute officia mollit. Sint veniam sint amet minim sunt duis incididunt minim laborum laborum. Do duis ad quis ea consequat."
-        image="https://firebasestorage.googleapis.com/v0/b/rebel-grooming.appspot.com/o/Banners%2FLanding%20page.png?alt=media&token=4bea6c71-5fda-41aa-86f0-05cc1751620c"
+        image={bannerImage}
       />
-      <div className={classes.root}>
-        <Grid container spacing={3}>
-          {products.map((_product) => (
-            <Grid key={_product.id} item xs={12} sm={6}>
-              <Product product={_product} />
-            </Grid>
-          ))}
-        </Grid>
-        {/* <div class="row no-gutters products-grid">
-        {products.map((_product) => (
-          <Product product={_product} key={_product.id} />
+      <img src={displayHeading1} alt="displayheading-1" className="img-fluid" />
+      <div id="main" className="container-fluid">
+        {products.map((_product, index) => (
+          <div className="row">
+            <Product
+              product={_product}
+              key={_product.id}
+              rev={index % 2 === 1 ? true : false}
+            />
+          </div>
         ))}
-      </div> */}
+      </div>
+      <img src={displayHeading2} alt="displayheading-2" className="img-fluid" />
+      <div className="container-fluid bg-white">
+        <img src={highlights} alt="highlights" className="img-fluid" />
       </div>
     </div>
   );

@@ -30,6 +30,9 @@ import MainLayout from "./layouts/MainLayout";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { publishableKey } from "./utils/stripeConfig";
+import AboutPage from "./pages/AboutPage";
+import BlogPage from "./pages/BlogPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
 
 const stripePromise = loadStripe(publishableKey);
 
@@ -65,6 +68,23 @@ function App(props) {
               render={() => (
                 <MainLayout>
                   <SignupPage />
+                </MainLayout>
+              )}
+            />
+            <Route
+              path="/about"
+              render={() => (
+                <MainLayout>
+                  <AboutPage />
+                </MainLayout>
+              )}
+            />
+            <Route path="/viewBlog/:id" component={BlogDetailPage} />
+            <Route
+              path="/blogs"
+              render={() => (
+                <MainLayout>
+                  <BlogPage />
                 </MainLayout>
               )}
             />

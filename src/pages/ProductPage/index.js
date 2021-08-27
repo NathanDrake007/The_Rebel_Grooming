@@ -1,50 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { firestore } from "../../utils/firebase";
-import Banner from "../../components/Banner";
-import NavBar from "../../components/NavBar";
+import { connect } from "react-redux";
+import { addToCart } from "../../redux/actions/cartActions";
 import Footer from "../../components/Footer";
+import Navbar from "../../components/NavBar";
+import hairPutty from "../../assets/pictures/hairPutty-1.jpg";
+import displayHeading1 from "../../assets/pictures/displayHeading-1.jpg";
 import "./product_page.css";
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import Grid from "@material-ui/core/Grid";
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import { Container } from "@material-ui/core";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    [theme.breakpoints.up('md')]: {
-    display: "flex",
-    },
-  },
-grid:{
-  padding: "25px 100px 50px 100px",
-  [theme.breakpoints.down('md')]: {
-    padding: "0px 50px 15px 50px"
-  },
-},
-  cardImage:{
-    objectFit: "contain",
-    margin: "10px",
-    [theme.breakpoints.down('md')]: {
-      margin: "0px -5px 10px 0px",
-    },
-  },
-  cardImage1:{
-      objectFit: "contain",
-      margin: "10px 10px 10px -10px",
-      [theme.breakpoints.down('md')]: {
-        margin: "10px -5px 0px 0px",
-      },
-  },
-}));
 function ProductPage(props) {
   const [product, setProduct] = useState(null);
-  const classes = useStyles();
   useEffect(() => {
     async function fetchProducts() {
       await firestore
@@ -61,141 +26,130 @@ function ProductPage(props) {
     fetchProducts();
   }, [props.match.params.id]);
 
-  const handleBuy = () => {
-    // props.addToCart({ ...props.product, quantity: 1 });
-    // console.log({ userId: props.userId, product: title });
+  const addToCart = () => {
+    props.addToCart({ ...product, quantity: 1 });
   };
-  const renderPage = () => { 
+  const renderPage = () => {
     return (
       <>
-        <NavBar />
-        <div className="productPage">
-          <Banner
-            title={product.title}
-            description={product.feature}
-            image={product.bannerImage}
+        <Navbar />
+        <div className="position-fixed bottom-0 p-3 bgcolor-2 row w-100 color-1 align-items-center">
+          <div className="col-md-6 d-flex align-items-center justify-content-center">
+            <h1 className="me-3">{product.title.toUpperCase()}</h1>
+            <p className="fs-5 me-2">
+              <s className="text-danger">&#8377;750</s>
+            </p>
+            <p className="fs-2 me-2 text-white fw-bold">
+              &#8377;{product.price} only
+            </p>
+            <p className="fs-5">{product.size}gms</p>
+          </div>
+          <div className="col-md-6 justify-content-center d-flex">
+            <button type="button" className="button-1">
+              BUY NOW
+            </button>
+            <button type="button" className="button-2" onClick={addToCart}>
+              ADD TO CART
+            </button>
+          </div>
+        </div>
+        <div className="container">
+          <div className="container-fluid my-5">
+            <div className="row">
+              <div className="col-12 d-block d-md-none d-xl-none mb-3">
+                <img
+                  src={hairPutty}
+                  alt="img-2"
+                  className="image-fluid"
+                  width="100%"
+                />
+              </div>
+              <div className="col-md-6 col-12">
+                <h1 className="fs-1">NATURAL SHINE</h1>
+                <p className="fs-4">{product.description_1}</p>
+                <h1 className="fs-1">MADE WITH..</h1>
+                <p className="fs-4">{product.description_2}</p>
+                <h1 className="fs-1">SMOOTH HAIR</h1>
+                <p className="fs-4">{product.description_3}</p>
+                <h1 className="fs-1">EFFORTLESS STYLE</h1>
+                <p className="fs-4">{product.description_4}</p>
+              </div>
+              <div className="col-md-6 position-relative d-none d-md-block d-xl-block">
+                <img
+                  src={hairPutty}
+                  alt="img-1"
+                  className="image-fluid rounded-circle position-absolute top-0 end-0 z-index-2"
+                  width="150"
+                  height="150"
+                />
+                <img
+                  src={hairPutty}
+                  alt="img-2"
+                  className="image-fluid position-absolute top-0 m-5 end-0 z-index-1"
+                  width="500"
+                />
+                <img
+                  src={hairPutty}
+                  alt="img-3"
+                  className="image-fluid position-absolute top-50 end-0 mt-5 z-index-0"
+                  width="200"
+                />
+              </div>
+            </div>
+          </div>
+          <img
+            src={displayHeading1}
+            alt="displayheading-1"
+            className="img-fluid"
           />
-          <Grid container spacing={3} className={classes.grid}>
-            <Grid item xs={12}>
-            <Card className={classes.root}>
-        <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-          {product.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {product.description_1}
-          </Typography>
-        </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary" onClick={handleBuy}>
-          Buy Now
-        </Button>
-      </CardActions>
-      </CardActionArea>
-      <Container>
-        <CardMedia
-            component="img"
-            alt="beardWax"
-            image={product.images[0]}
-            title="beardWax"
-            className={classes.cardImage}
-          />
-      </Container>
-    </Card>
-    </Grid>
-    <Grid item xs={12} sm={6}>
-      <Card>
-        <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-          {product.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {product.description_1}
-          </Typography>
-        </CardContent>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary" onClick={handleBuy}>
-            Buy Now
-          </Button>
-        </CardActions>
-      </CardActionArea>
-        <CardMedia
-          component="img"
-          alt="beardWax"
-          image={product.images[2]}
-          title="beardWax"
-        />
-
-    </Card>
-    </Grid>
-    <Grid item xs={12} sm={6}>
-      <Card>
-      <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-          {product.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {product.description_1}
-          </Typography>
-        </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary" onClick={handleBuy}>
-          Buy Now
-        </Button>
-      </CardActions>
-      </CardActionArea>
-        <CardMedia
-          component="img"
-          alt="beardWax"
-          image={product.images[3]}
-          title="beardWax"
-        />
-    </Card>
-    </Grid>
-    <Grid item xs={12}>
-      <Card className={classes.root}>
-          <Container>
-            <CardMedia
-              component="img"
-              alt="beardWax"
-              image={product.images[1]}
-              title="beardWax"
-              className={classes.cardImage1}
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6 color-1">
+                <h1>ON THE GO STYLING</h1>
+                {product.HTU.st1.map((step, index) => (
+                  <p className="fs-5">
+                    <strong className="fs-4 me-2">Step {index + 1}</strong>
+                    {step}
+                  </p>
+                ))}
+              </div>
+              <div className="col-md-6 color-1">
+                <h1>PROFESSIONAL STYLING</h1>
+                {product.HTU.st2.map((step, index) => (
+                  <p className="fs-5">
+                    <strong className="fs-4 me-2">Step {index + 1}</strong>
+                    {step}
+                  </p>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="container-fluid d-md-flex py-5">
+            <img
+              src={hairPutty}
+              alt="img-2"
+              className="image-fluid d-block d-md-none d-xl-none"
+              width="100%"
             />
-          </Container>
-        <CardActionArea>
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-          {product.title}
-          </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
-          {product.description_4}
-          </Typography>
-        </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary" onClick={handleBuy}>
-          Buy Now
-        </Button>
-      </CardActions>
-      </CardActionArea>
-    </Card>
-    </Grid>
-    </Grid>
+            <img
+              src={hairPutty}
+              alt="img-2"
+              className="image-fluid flex-fill d-none d-md-block d-xl-block"
+              width="500"
+            />
+            <img
+              src={hairPutty}
+              alt="img-2"
+              className="image-fluid flex-fill d-none d-md-block d-xl-block"
+              width="500"
+            />
+          </div>
+          <div className="container p-5 d-flex flex-column flex-md-row color-1 my-2 justify-content-center align-items-md-end">
+            <h1 className="me-3 ">INGREDIENTS</h1>
+            <p className="fs-4">
+              beeswax,kaolin clay, shea butter, jojoba oil, vitamin e oil
+            </p>
+          </div>
         </div>
         <Footer />
       </>
@@ -205,4 +159,4 @@ function ProductPage(props) {
   return product ? renderPage() : <div>Loading......</div>;
 }
 
-export default ProductPage;
+export default connect(null, { addToCart })(ProductPage);

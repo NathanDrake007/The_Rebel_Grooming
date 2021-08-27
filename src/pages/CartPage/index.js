@@ -1,83 +1,34 @@
 import React from "react";
 import { connect } from "react-redux";
-import ProductListItem from "../../components/ProductListItem";
-import { Link, useHistory } from "react-router-dom";
-import "./cart_page.css";
+import { Link } from "react-router-dom";
+import "./style.css";
+import CartTile from "../../components/CartTile";
 function CartPage(props) {
-  const history = useHistory();
+  // const history = useHistory();
   const renderCart = () => {
     return (
-      <div className="row">
-        <div className="col-md-8 cart">
-          <div className="title">
-            <div className="row">
-              <div className="col">
-                <h4>
-                  <b>Shopping Cart</b>
-                </h4>
-              </div>
-              <div className="col align-self-center text-right text-muted">
-                {props.products.length}
-              </div>
+      <div className="container my-5">
+        <h1>Shopping Cart</h1>
+        <hr />
+        {[props.products.map((product) => <CartTile product={product} />)]}
+        <div className="row">
+          <div className="col-md-8 d-none d-md-block d-xl-block" />
+          <div className="container border-bottom border-secondary border-2 p-3 col-md-4">
+            <div className="d-flex mb-3">
+              <h4 className="me-3">TOTAL :</h4>
+              <strong className="fs-5">&#8377;{props.totalPrice}</strong>
             </div>
+            <Link to="/checkout" className="btn button bgcolor-1 w-100">
+              Proceed to Checkout
+            </Link>
           </div>
-          {props.products.map((product) => (
-            <ProductListItem
-              id={product.id}
-              title={product.title}
-              subTitle={product.feature}
-              price={product.price}
-              image={product.image}
-              quantity={product.quantity}
-              key={product.id}
-            />
-          ))}
-          <div className="back-to-shop">
-            <button onClick={() => history.goBack()} className="cartAnchor">
-              <i class="fas fa-arrow-left"></i>
-            </button>
-            <span className="text-muted">Back to shop</span>
-          </div>
-        </div>
-        <div className="col-md-4 summary">
-          <div>
-            <h5>
-              <b>Summary</b>
-            </h5>
-          </div>
-          <hr className="cartHr" />
-          <div className="row">
-            <div className="col" style={{ paddingLeft: "0px" }}>
-              ITEMS {props.products.length}
-            </div>
-            <div className="col text-right">&#8377; {props.totalPrice}</div>
-          </div>
-          <form className="cartForm">
-            <p>SHIPPING</p>
-            <p>GIVE CODE</p>
-            <input
-              className="cartInput"
-              id="code"
-              placeholder="Enter your code"
-            />
-          </form>
-          <div
-            className="row"
-            style={{ borderTop: "1px solid rgba(0,0,0,.1)", padding: "2vh 0" }}
-          >
-            <div className="col">TOTAL PRICE</div>
-            <div className="col text-right">&#8377; {props.totalPrice}</div>
-          </div>
-          <Link to="/checkout" className="cartBtn">
-            CHECKOUT
-          </Link>
         </div>
       </div>
     );
   };
   const renderEmptyCart = () => {
     return (
-      <div className="text-center p-5">
+      <div className="container text-center p-5">
         <h1 className="fs-1">Your Cart Empty.</h1>
         {!props.isSignedIn ? (
           <>
@@ -90,19 +41,15 @@ function CartPage(props) {
             </Link>
           </>
         ) : (
-          <h5 className="fs-5 fw-light">continue shopping.</h5>
+          <h5 className="fs-5 fw-light">Shop for products</h5>
         )}
-        <Link to="/" className="btn btn-secondary btn-lg">
+        <Link to="/" className="button-1">
           Continue Shopping
         </Link>
       </div>
     );
   };
-  return (
-    <div className="card mx-auto">
-      {props.products.length === 0 ? renderEmptyCart() : renderCart()}
-    </div>
-  );
+  return props.products.length === 0 ? renderEmptyCart() : renderCart();
 }
 const mapStateToProps = (state) => {
   return {

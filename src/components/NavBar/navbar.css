@@ -1,19 +1,9 @@
 .navbar {
-  background-color: #e5e5e5;
-  opacity: 1;
-  /* height: 150px; */
+  background-color: #d9d7c7;
 }
 .nav-text {
   color: #3b160e;
-  font-size: 24px;
-  font-weight: bolder;
 }
-.navbar-dark .navbar-nav .nav-link {
-  color: #fff;
-  font-size: 13px;
-}
-
-.navbar-dark .navbar-nav .nav-link .apple-logo {
-  font-size: 21px;
-  line-height: 0;
+.rightNav {
+  display: flex;
 }

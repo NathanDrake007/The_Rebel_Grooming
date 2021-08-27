@@ -1,8 +1,7 @@
 .banner {
-  margin-bottom: 50px;
+  margin-top: -10px;
 }
 .banner-image {
-  max-height: 90vh;
   width: 100vw;
   object-fit: contain;
 }
