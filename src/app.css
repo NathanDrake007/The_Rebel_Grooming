@@ -102,7 +102,9 @@ body {
   color: #3a160e;
   background-color: #ffdfbe;
 }
-
+.loading {
+  height: 100vh;
+}
 @media only screen and (max-width: 768px) {
   .button-1,
   .button-3,

@@ -5,8 +5,9 @@ import { addToCart } from "../../redux/actions/cartActions";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavBar";
 import hairPutty from "../../assets/pictures/hairPutty-1.jpg";
-import displayHeading1 from "../../assets/pictures/displayHeading-1.jpg";
+import htuDisplay from "../../assets/pictures/htuDisplay.jpg";
 import "./product_page.css";
+import Loading from "../../components/Loading";
 
 function ProductPage(props) {
   const [product, setProduct] = useState(null);
@@ -97,11 +98,7 @@ function ProductPage(props) {
               </div>
             </div>
           </div>
-          <img
-            src={displayHeading1}
-            alt="displayheading-1"
-            className="img-fluid"
-          />
+          <img src={htuDisplay} alt="displayheading-1" className="img-fluid" />
           <div className="container">
             <div className="row">
               <div className="col-md-6 color-1">
@@ -156,7 +153,7 @@ function ProductPage(props) {
     );
   };
 
-  return product ? renderPage() : <div>Loading......</div>;
+  return product ? renderPage() : <Loading />;
 }
 
 export default connect(null, { addToCart })(ProductPage);

@@ -20,7 +20,7 @@ function NavBar(props) {
         </Link>
         <div className="rightNav order-md-2">
           <Link className="nav-link nav-text fs-4" to="/cart">
-            <i className="fa fa-shopping-bag"></i>
+            <i class="fas fa-shopping-cart"></i>
           </Link>
           <div className="nav-item dropdown">
             <span
@@ -32,7 +32,10 @@ function NavBar(props) {
             >
               <i className="fa fa-user"></i>
             </span>
-            <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul
+              className="dropdown-menu bgcolor-3"
+              aria-labelledby="navbarDropdown"
+            >
               <li>
                 <Link to="/orders" className="dropdown-item">
                   Orders
