@@ -26,12 +26,14 @@ const cartReducer = (state = initalState, action) => {
     case "INCREASE_QUANTITY":
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.newCart,
+        totalPrice: action.payload.price,
       };
     case "DECREASE_QUANTITY":
       return {
         ...state,
-        products: action.payload,
+        products: action.payload.newCart,
+        totalPrice: action.payload.price,
       };
     default:
       return state;

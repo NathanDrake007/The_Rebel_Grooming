@@ -3,16 +3,33 @@ import { connect } from "react-redux";
 import { signIn } from "../../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import "./style.css";
+import { signInWithGoogle } from "../../utils/firebase";
+import history from "../../utils/history";
+import Popup from "../../components/Popup";
 function SignInPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     props.signIn({
       email,
       password,
     });
-    console.log(email, password);
+  };
+  const googleSignIn = () => {
+    signInWithGoogle().then((e) => {
+      setOpen(true);
+      setTimeout(() => history.replace("/"), 2000);
+    });
   };
   return (
     <div className="d-flex align-items-center h-100 m-5">
@@ -24,7 +41,7 @@ function SignInPage(props) {
                 <h2 className="text-uppercase text-center mb-5">Sign In</h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example3cg">
+                    <label className="form-label" htmlFor="form3Example3cg">
                       Your Email
                     </label>
                     <input
@@ -35,7 +52,7 @@ function SignInPage(props) {
                     />
                   </div>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example4cg">
+                    <label className="form-label" htmlFor="form3Example4cg">
                       Password
                     </label>
                     <input
@@ -57,6 +74,7 @@ function SignInPage(props) {
                     <button
                       type="button"
                       className="btn button btn-block btn-lg bgcolor-1 w-100"
+                      onClick={googleSignIn}
                     >
                       Sign in with google
                     </button>
@@ -73,6 +91,7 @@ function SignInPage(props) {
           </div>
         </div>
       </div>
+      <Popup text="Signed In" handleClose={handleClose} open={open} />
     </div>
   );
 }

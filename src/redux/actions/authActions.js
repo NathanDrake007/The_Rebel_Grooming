@@ -1,4 +1,5 @@
 import { auth } from "../../utils/firebase";
+import { firestore } from "../../utils/firebase";
 import history from "../../utils/history";
 
 export const setUser = (userId) => {
@@ -9,8 +10,8 @@ export const setUser = (userId) => {
 };
 export const signIn =
   ({ email, password }) =>
-  (dispatch, getState) => {
-    auth
+  async (dispatch, getState) => {
+    await auth
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var userId = userCredential.user;
@@ -24,12 +25,18 @@ export const signIn =
   };
 
 export const signUp =
-  ({ email, password }) =>
-  (dispatch, getState) => {
-    auth
+  ({ name, email, password }) =>
+  async (dispatch, getState) => {
+    await auth
       .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
+      .then(async (userCredential) => {
         var userId = userCredential.user;
+        await firestore.collection("users").doc(userId).set({
+          name,
+          email,
+          role: "user",
+          auth: "manual",
+        });
         dispatch({ type: "SIGN_UP", payload: userId });
         history.push("/");
       })
@@ -39,7 +46,7 @@ export const signUp =
       });
   };
 export const signOut = () => {
-  alert("signed out successfully");
+  auth.signOut();
   return {
     type: "SIGN_OUT",
   };

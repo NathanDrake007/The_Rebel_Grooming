@@ -42,7 +42,7 @@ function PaymentForm(props) {
 
   const handleSubmit = () => {
     const cardElement = elements.getElement("card");
-    const { totalPrice, shippingDetails } = props;
+    const { totalPrice, shippingDetails, save } = props;
     apiInstance
       .post("/payments/create", {
         amount: totalPrice * 100,
@@ -65,12 +65,11 @@ function PaymentForm(props) {
                 payment_method: paymentMethod.id,
               })
               .then(() => {
-                alert("success");
                 const configOrder = {
                   orderTotal: totalPrice,
+                  paymentMode: "CARD",
                   orderItems: props.products.map((item) => {
                     const { id, title, price, quantity } = item;
-
                     return {
                       id,
                       title,

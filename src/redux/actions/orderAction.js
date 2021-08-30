@@ -1,14 +1,14 @@
 import { firestore } from "../../utils/firebase";
 
-export const placeOrder = (order) => (dispatch, getState) => {
+export const placeOrder = (order) => async (dispatch, getState) => {
   const userId = getState().auth.userId;
-  const timeStamp = new Date().toDateString();
+  const date = new Date().toDateString();
   const newOrder = {
     ...order,
     userId,
-    timeStamp,
+    date,
   };
-  firestore
+  await firestore
     .collection("orders")
     .add(newOrder)
     .then((docRef) => {

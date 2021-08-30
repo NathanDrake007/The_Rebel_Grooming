@@ -6,11 +6,21 @@ import Footer from "../../components/Footer";
 import Navbar from "../../components/NavBar";
 import hairPutty from "../../assets/pictures/hairPutty-1.jpg";
 import htuDisplay from "../../assets/pictures/htuDisplay.jpg";
-import "./product_page.css";
 import Loading from "../../components/Loading";
+import Popup from "../../components/Popup";
 
 function ProductPage(props) {
   const [product, setProduct] = useState(null);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
   useEffect(() => {
     async function fetchProducts() {
       await firestore
@@ -28,7 +38,9 @@ function ProductPage(props) {
   }, [props.match.params.id]);
 
   const addToCart = () => {
-    props.addToCart({ ...product, quantity: 1 });
+    const { title, price, image, size } = product;
+    props.addToCart({ title, price, image, size, quantity: 1 });
+    setOpen(true);
   };
   const renderPage = () => {
     return (
@@ -43,7 +55,7 @@ function ProductPage(props) {
             <p className="fs-2 me-2 text-white fw-bold">
               &#8377;{product.price} only
             </p>
-            <p className="fs-5">{product.size}gms</p>
+            <p className="fs-5">{product.size}</p>
           </div>
           <div className="col-md-6 justify-content-center d-flex">
             <button type="button" className="button-1">
@@ -57,7 +69,7 @@ function ProductPage(props) {
         <div className="container">
           <div className="container-fluid my-5">
             <div className="row">
-              <div className="col-12 d-block d-md-none d-xl-none mb-3">
+              <div className="col-12 d-block d-xl-none mb-3">
                 <img
                   src={hairPutty}
                   alt="img-2"
@@ -75,7 +87,7 @@ function ProductPage(props) {
                 <h1 className="fs-1">EFFORTLESS STYLE</h1>
                 <p className="fs-4">{product.description_4}</p>
               </div>
-              <div className="col-md-6 position-relative d-none d-md-block d-xl-block">
+              <div className="col-md-6 position-relative d-none d-xl-block">
                 <img
                   src={hairPutty}
                   alt="img-1"
@@ -99,26 +111,34 @@ function ProductPage(props) {
             </div>
           </div>
           <img src={htuDisplay} alt="displayheading-1" className="img-fluid" />
-          <div className="container">
-            <div className="row">
-              <div className="col-md-6 color-1">
+          <div className="container ">
+            <div
+              className={
+                product.HTU.st2 === null
+                  ? "row justify-content-center text-center"
+                  : "row"
+              }
+            >
+              <div className="col-md-6 color-1 ">
                 <h1>ON THE GO STYLING</h1>
                 {product.HTU.st1.map((step, index) => (
-                  <p className="fs-5">
+                  <p className="fs-5" key={`st1-${index}`}>
                     <strong className="fs-4 me-2">Step {index + 1}</strong>
                     {step}
                   </p>
                 ))}
               </div>
-              <div className="col-md-6 color-1">
-                <h1>PROFESSIONAL STYLING</h1>
-                {product.HTU.st2.map((step, index) => (
-                  <p className="fs-5">
-                    <strong className="fs-4 me-2">Step {index + 1}</strong>
-                    {step}
-                  </p>
-                ))}
-              </div>
+              {product.HTU.st2 !== null ? (
+                <div className="col-md-6 color-1">
+                  <h1>PROFESSIONAL STYLING</h1>
+                  {product.HTU.st2.map((step, index) => (
+                    <p className="fs-5" key={`st2-${index}`}>
+                      <strong className="fs-4 me-2">Step {index + 1}</strong>
+                      {step}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
             </div>
           </div>
           <div className="container-fluid d-md-flex py-5">
@@ -148,6 +168,7 @@ function ProductPage(props) {
             </p>
           </div>
         </div>
+        <Popup text="Added to Cart" handleClose={handleClose} open={open} />
         <Footer />
       </>
     );

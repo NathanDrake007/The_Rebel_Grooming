@@ -49,7 +49,6 @@ export default function AddressForm(props) {
     if (!validate()) return;
     if (country.toLowerCase().localeCompare("india") === 0) {
       setCountry("IN");
-      console.log(country);
     }
     props.setShippingDetails({
       name,
@@ -62,6 +61,7 @@ export default function AddressForm(props) {
         country,
       },
     });
+    props.setSave(save);
     props.handleNext();
   };
   return (

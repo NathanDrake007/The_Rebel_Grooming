@@ -5,8 +5,22 @@ import { connect } from "react-redux";
 
 import logo from "../../assets/pictures/logo.png";
 import "./navbar.css";
+import Popup from "../Popup";
 
 function NavBar(props) {
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  const handleSignOut = () => {
+    setOpen(true);
+    props.signOut();
+  };
   return (
     <nav className="navbar navbar-expand-md">
       <div className="container">
@@ -20,7 +34,7 @@ function NavBar(props) {
         </Link>
         <div className="rightNav order-md-2">
           <Link className="nav-link nav-text fs-4" to="/cart">
-            <i class="fas fa-shopping-cart"></i>
+            <i className="fas fa-shopping-cart"></i>
           </Link>
           <div className="nav-item dropdown">
             <span
@@ -43,7 +57,7 @@ function NavBar(props) {
               </li>
               <li>
                 {props.isSignedIn ? (
-                  <button className="dropdown-item" onClick={props.signOut}>
+                  <button className="dropdown-item" onClick={handleSignOut}>
                     Sign out
                   </button>
                 ) : (
@@ -79,10 +93,10 @@ function NavBar(props) {
                 BLOG
               </Link>
             </li>
-            <li className="nav-item"></li>
           </ul>
         </div>
       </div>
+      <Popup text="Signed Out" handleClose={handleClose} open={open} />
     </nav>
   );
 }

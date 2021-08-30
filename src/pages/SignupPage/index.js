@@ -9,15 +9,25 @@ function SignUpPage(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [passwordError, setPasswordError] = useState(false);
+  const [mailError, setMailError] = useState(false);
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!email.includes("@")) {
+      setMailError(true);
+      return;
+    }
+    setMailError(false);
+    if (password !== confirmPassword) {
+      setPasswordError(true);
+      return;
+    }
+    setPasswordError(false);
     props.signUp({
+      name,
       email,
       password,
-      confirmPassword,
     });
-    console.log(name);
   };
   return (
     <div className="d-flex align-items-center h-100 m-5">
@@ -31,7 +41,7 @@ function SignUpPage(props) {
                 </h2>
                 <form onSubmit={handleSubmit}>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example1cg">
+                    <label className="form-label" htmlFor="form3Example1cg">
                       Your Name
                     </label>
                     <input
@@ -42,7 +52,7 @@ function SignUpPage(props) {
                     />
                   </div>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example3cg">
+                    <label className="form-label" htmlFor="form3Example3cg">
                       Your Email
                     </label>
                     <input
@@ -51,9 +61,14 @@ function SignUpPage(props) {
                       className="form-control form-control-lg"
                       onChange={(e) => setEmail(e.target.value)}
                     />
+                    <div
+                      className={mailError ? "d-block text-danger" : "d-none"}
+                    >
+                      invalid mail
+                    </div>
                   </div>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example4cg">
+                    <label className="form-label" htmlFor="form3Example4cg">
                       Password
                     </label>
                     <input
@@ -64,7 +79,7 @@ function SignUpPage(props) {
                     />
                   </div>
                   <div className="form-outline mb-2">
-                    <label className="form-label" for="form3Example4cdg">
+                    <label className="form-label" htmlFor="form3Example4cdg">
                       Confirm your password
                     </label>
                     <input
@@ -73,6 +88,13 @@ function SignUpPage(props) {
                       className="form-control form-control-lg"
                       onChange={(e) => setConfirmPassword(e.target.value)}
                     />
+                    <div
+                      className={
+                        passwordError ? "d-block text-danger" : "d-none"
+                      }
+                    >
+                      password doesn't match
+                    </div>
                   </div>
                   <div className="d-flex justify-content-center">
                     <button
@@ -80,14 +102,6 @@ function SignUpPage(props) {
                       className="btn button btn-block btn-lg bgcolor-1 w-100"
                     >
                       Sign up
-                    </button>
-                  </div>
-                  <div className="d-flex justify-content-center mt-3">
-                    <button
-                      type="button"
-                      className="btn button btn-block btn-lg bgcolor-1 w-100"
-                    >
-                      Sign up with google
                     </button>
                   </div>
                   <p className="text-center text-muted mt-5 mb-0">

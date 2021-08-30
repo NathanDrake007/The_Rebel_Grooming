@@ -12,6 +12,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "../../components/AddressForm";
 import PaymentForm from "../../components/PaymentForm";
 import Review from "../../components/Review";
+import SavedAddress from "../../components/SavedAddress";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -33,9 +34,17 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
+    backgroundColor: "transparent",
+    border: "2px solid #3b160e",
+    color: "#3b160e",
   },
   stepper: {
     padding: theme.spacing(3, 0, 5),
+    backgroundColor: "transparent",
+    color: "#3b160e",
+  },
+  color1: {
+    color: "#3b160e",
   },
 }));
 
@@ -45,6 +54,7 @@ function CheckoutPage(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingDetails, setShippingDetails] = useState(null);
+  const [save, setSave] = useState(false);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -63,7 +73,7 @@ function CheckoutPage(props) {
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel className={classes.color1}>{label}</StepLabel>
               </Step>
             ))}
           </Stepper>
@@ -88,21 +98,28 @@ function CheckoutPage(props) {
             ) : (
               <React.Fragment>
                 {activeStep === 0 ? (
-                  <AddressForm
+                  <SavedAddress
                     setShippingDetails={setShippingDetails}
                     handleNext={handleNext}
                   />
                 ) : activeStep === 1 ? (
+                  <AddressForm
+                    setShippingDetails={setShippingDetails}
+                    handleNext={handleNext}
+                    setSave={setSave}
+                  />
+                ) : activeStep === 2 ? (
                   <Review
                     shippingDetails={shippingDetails}
                     handleBack={handleBack}
                     handleNext={handleNext}
                   />
-                ) : activeStep === 2 ? (
+                ) : activeStep === 3 ? (
                   <PaymentForm
                     shippingDetails={shippingDetails}
                     handleBack={handleBack}
                     handleNext={handleNext}
+                    save={save}
                   />
                 ) : null}
               </React.Fragment>
