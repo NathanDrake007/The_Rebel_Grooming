@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { signUp } from "../../redux/actions/authActions";
 import { Link } from "react-router-dom";
 import "./style.css";
+import Popup from "../../components/Popup";
 
 function SignUpPage(props) {
   const [name, setName] = useState("");
@@ -11,6 +12,14 @@ function SignUpPage(props) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState(false);
   const [mailError, setMailError] = useState(false);
+  const [open, setOpen] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!email.includes("@")) {
@@ -18,7 +27,7 @@ function SignUpPage(props) {
       return;
     }
     setMailError(false);
-    if (password !== confirmPassword) {
+    if (password !== confirmPassword || password.length < 8) {
       setPasswordError(true);
       return;
     }
@@ -28,7 +37,13 @@ function SignUpPage(props) {
       email,
       password,
     });
+    setOpen(true);
   };
+  useEffect(() => {
+    if (props.authError !== null) {
+      setOpen(true);
+    }
+  }, [props.authError]);
   return (
     <div className="d-flex align-items-center h-100 m-5">
       <div className="container h-100">
@@ -93,7 +108,7 @@ function SignUpPage(props) {
                         passwordError ? "d-block text-danger" : "d-none"
                       }
                     >
-                      password doesn't match
+                      password doesn't match or length is too short
                     </div>
                   </div>
                   <div className="d-flex justify-content-center">
@@ -116,6 +131,11 @@ function SignUpPage(props) {
           </div>
         </div>
       </div>
+      <Popup
+        text={props.authError !== null ? props.authError : "Signed Up"}
+        handleClose={handleClose}
+        open={open}
+      />
     </div>
   );
 }

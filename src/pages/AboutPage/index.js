@@ -1,12 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import about1 from "../../assets/pictures/aboutbg-1.jpg";
 import about2 from "../../assets/pictures/aboutbg-2.jpg";
 import about3 from "../../assets/pictures/aboutbg-3.jpg";
 import highlights from "../../assets/pictures/brand-highlights.jpg";
 import displayHeading2 from "../../assets/pictures/displayHeading-2.jpg";
+import Popup from "../../components/Popup";
+import { firestore } from "../../utils/firebase";
 import "./style.css";
 function AboutPage() {
+  const [email, setEmail] = useState("");
+  const [open, setOpen] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!email.includes("@")) {
+      setEmailError(true);
+    }
+    if (emailError) setEmailError(false);
+    await firestore
+      .collection("newsletter")
+      .add(email)
+      .then(() => setOpen(true))
+      .catch(() => setHasError(true));
+  };
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpen(false);
+  };
   return (
     <>
       <div className="container">
@@ -65,7 +89,7 @@ function AboutPage() {
             <p className="fs-3">
               view our blog for more infomation about styling and grooming
             </p>
-            <button className="button-3 m-0">View Products</button>
+            <button className="button-3 m-0">View Blogs</button>
           </div>
         </div>
         <div className="about-container text-white ">
@@ -73,10 +97,17 @@ function AboutPage() {
           <div className="wrap w-25">
             <h1>NEWSLETTER</h1>
             <p>Sign up and be the first to know about our special offers!</p>
-            <form className="d-flex">
-              <input type="email" className="form-control w-75" />
-              <button className="btn bgcolor-2 button w-25">
-                View Products
+            <form className="d-flex" onSubmit={handleSubmit}>
+              <input
+                type="email"
+                className="form-control w-75"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              {emailError ? <p className="text-danger">Invalid Email</p> : null}
+              <button type="submit" className="btn bgcolor-2 button w-25">
+                Subcribe
               </button>
             </form>
           </div>
@@ -107,16 +138,44 @@ function AboutPage() {
         <div className="container p-2">
           <h1>NEWSLETTER</h1>
           <p>Sign up and be the first to know about our special offers!</p>
-          <form className="d-flex">
-            <input type="email" className="form-control w-75" />
-            <button className="btn bgcolor-2 button w-25">Sign up</button>
+          <form className="d-flex" onSubmit={handleSubmit}>
+            <input
+              type="email"
+              className="form-control w-75"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            {emailError ? <p className="text-danger">Invalid Email</p> : null}
+            <button type="submit" className="btn bgcolor-2 button w-25">
+              Subcribe
+            </button>
           </form>
         </div>
       </div>
-      <img src={displayHeading2} alt="displayheading-2" className="img-fluid" />
+      <img
+        src={displayHeading2}
+        alt="displayheading-2"
+        className="img-fluid"
+        width="100%"
+      />
       <div className="container-fluid bg-white">
-        <img src={highlights} alt="highlights" className="img-fluid" />
+        <img
+          src={highlights}
+          alt="highlights"
+          className="img-fluid"
+          width="100%"
+        />
       </div>
+      <Popup
+        open={open}
+        text={
+          hasError
+            ? "Sorry unable to subscribe try again.."
+            : "Subcribed sucessfully"
+        }
+        handleClose={handleClose}
+      />
     </>
   );
 }

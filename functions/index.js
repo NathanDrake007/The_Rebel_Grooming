@@ -1,9 +1,9 @@
 const functions = require("firebase-functions");
 const express = require("express");
 const cors = require("cors");
-const stripe = require("stripe")(
-  "sk_test_51JCh86SGvkpq7U5NflFmWL4755QSQNesWwzHdCcmM3Sr7evbmaodNATY3PeWTbO9sqx2C7KisJSXV8UtsWh19vqp00Axbjz8kT"
-);
+const dotenv = require("dotenv");
+dotenv.config();
+const stripe = require("stripe")(process.env.SECRET_KEY);
 
 const app = express();
 
@@ -17,11 +17,13 @@ app.use(express.json());
 app.post("/payments/create", async (req, res) => {
   try {
     const { amount, shipping } = req.body;
-    console.log(amount, shipping);
+    const email = shipping.email;
+    delete shipping.email;
     const paymentIntent = await stripe.paymentIntents.create({
-      // shipping,
+      shipping,
       amount,
       currency: "INR",
+      receipt_email: email,
     });
 
     res.status(200).send(paymentIntent.client_secret);

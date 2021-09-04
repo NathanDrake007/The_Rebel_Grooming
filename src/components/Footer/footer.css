@@ -17,5 +17,10 @@
 }
 footer {
   background-color: #3b160e;
-  margin-top: -12px;
+}
+.footer-button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+  color: white;
 }

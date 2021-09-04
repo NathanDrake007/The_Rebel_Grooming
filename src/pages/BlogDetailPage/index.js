@@ -4,8 +4,11 @@ import NavBar from "../../components/NavBar";
 import Footer from "../../components/Footer";
 import { Link } from "react-router-dom";
 import "./style.css";
+import Loading from "../../components/Loading";
+import DataErrorPage from "../DataErrorPage";
 function BlogDetailPage(props) {
   const [blog, setBlog] = useState(null);
+  const [hasError, setHasError] = useState(false);
   useEffect(() => {
     async function fetchBlogs() {
       await firestore
@@ -16,7 +19,7 @@ function BlogDetailPage(props) {
           setBlog(doc.data());
         })
         .catch((error) => {
-          console.log("Error getting document:", error);
+          setHasError(true);
         });
     }
     fetchBlogs();
@@ -59,7 +62,13 @@ function BlogDetailPage(props) {
   return (
     <>
       <NavBar />
-      {blog !== null ? renderPage() : "loading..."}
+      {hasError ? (
+        <DataErrorPage />
+      ) : blog !== null ? (
+        renderPage()
+      ) : (
+        <Loading />
+      )}
       <Footer />
     </>
   );

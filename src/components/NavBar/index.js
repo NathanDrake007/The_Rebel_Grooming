@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { signOut } from "../../redux/actions/authActions";
+import { clearCart } from "../../redux/actions/cartActions";
 import { connect } from "react-redux";
 
 import logo from "../../assets/pictures/logo.png";
-import "./navbar.css";
 import Popup from "../Popup";
 
 function NavBar(props) {
@@ -20,11 +20,12 @@ function NavBar(props) {
   const handleSignOut = () => {
     setOpen(true);
     props.signOut();
+    props.clearCart();
   };
   return (
     <nav className="navbar navbar-expand-md">
       <div className="container">
-        <Link className="nav-link nav-text fs-4" to="/">
+        <Link className="nav-link color-1 fs-4" to="/">
           <img
             className="rounded-circle img-fluid"
             src={logo}
@@ -32,13 +33,13 @@ function NavBar(props) {
             alt="logo"
           />
         </Link>
-        <div className="rightNav order-md-2">
-          <Link className="nav-link nav-text fs-4" to="/cart">
+        <div className="d-flex order-md-2">
+          <Link className="nav-link color-1 fs-4" to="/cart">
             <i className="fas fa-shopping-cart"></i>
           </Link>
           <div className="nav-item dropdown">
             <span
-              className="nav-link dropdown-toggle nav-text fs-4"
+              className="nav-link dropdown-toggle color-1 fs-4"
               id="navbarDropdown"
               role="button"
               data-bs-toggle="dropdown"
@@ -73,23 +74,23 @@ function NavBar(props) {
             className="navbar-toggler"
             data-bs-target="#navcol-1"
           >
-            <i className="fas fa-bars nav-text fs-4"></i>
+            <i className="fas fa-bars color-1 fs-4"></i>
           </button>
         </div>
         <div className="collapse navbar-collapse order-md-1" id="navcol-1">
           <ul className="navbar-nav align-items-center">
             <li className="nav-item">
-              <Link to="/" className="nav-text fs-4 nav-link">
+              <Link to="/" className="color-1 fs-4 nav-link">
                 HOME
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-text fs-4 nav-link">
+              <Link to="/about" className="color-1 fs-4 nav-link">
                 ABOUT
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/blogs" className="nav-link nav-text fs-4">
+              <Link to="/blogs" className="nav-link color-1 fs-4">
                 BLOG
               </Link>
             </li>
@@ -103,4 +104,4 @@ function NavBar(props) {
 const mapStateToProps = (state) => {
   return { isSignedIn: state.auth.isSignedIn };
 };
-export default connect(mapStateToProps, { signOut })(NavBar);
+export default connect(mapStateToProps, { signOut, clearCart })(NavBar);

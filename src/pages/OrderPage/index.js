@@ -1,15 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import OrderTile from "../../components/OrderTile";
+import { firestore } from "../../utils/firebase";
+import DataErrorPage from "../DataErrorPage";
+
 function OrderPage(props) {
+  const [orders, setOrders] = useState([]);
+  const [hasError, setHasError] = useState(false);
+  useEffect(() => {
+    async function fetchProducts() {
+      var temp = [];
+      await firestore
+        .collection("orders")
+        .where("userId", "==", props.userId)
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            temp.push({ id: doc.id, ...doc.data() });
+          });
+        })
+        .catch((error) => setHasError(true));
+      setOrders(temp);
+    }
+    fetchProducts();
+  }, [props.userId]);
   const renderOrderPage = () => {
     return (
       <div className="container">
         <h1>Your Orders</h1>
         <hr />
-        {props.orders.map((order) => (
-          <OrderTile order={order} />
+        {orders.map((order) => (
+          <OrderTile order={order} key={order.id} />
         ))}
       </div>
     );
@@ -36,12 +58,18 @@ function OrderPage(props) {
       </div>
     );
   };
-  return props.orders.length !== 0 ? renderOrderPage() : renderEmptyPage();
+  return hasError ? (
+    <DataErrorPage />
+  ) : orders.length !== 0 ? (
+    renderOrderPage()
+  ) : (
+    renderEmptyPage()
+  );
 }
 const mapStateToProps = (state) => {
   return {
-    orders: state.orders.orders,
     isSignedIn: state.auth.isSignedIn,
+    userId: state.auth.userId,
   };
 };
 export default connect(mapStateToProps, null)(OrderPage);

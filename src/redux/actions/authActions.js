@@ -19,7 +19,15 @@ export const signIn =
         history.push("/");
       })
       .catch((error) => {
-        var errorMessage = error.message;
+        var errorMessage = null;
+        if (error.code === "auth/user-not-found")
+          errorMessage = "User Doesn't Exist Please Check your Mail ID";
+        else if ("auth/wrong-password")
+          errorMessage = "Invalid Password please check your password";
+        else if (error.code === "auth/too-many-requests")
+          errorMessage = "Too Many attempts try changing the password";
+        else errorMessage = "check your credentials and try again later";
+
         dispatch({ type: "AUTH_ERROR", payload: errorMessage });
       });
   };
@@ -29,9 +37,9 @@ export const signUp =
   async (dispatch, getState) => {
     await auth
       .createUserWithEmailAndPassword(email, password)
-      .then(async (userCredential) => {
-        var userId = userCredential.user;
-        await firestore.collection("users").doc(userId).set({
+      .then((userCredential) => {
+        var userId = userCredential.user.uid;
+        firestore.collection("users").doc(userId).set({
           name,
           email,
           role: "user",
@@ -41,12 +49,23 @@ export const signUp =
         history.push("/");
       })
       .catch((error) => {
-        var errorMessage = error.message;
+        var errorMessage = null;
+        if (
+          error.code === "auth/email-already-exists" ||
+          error.code === "auth/email-already-in-use"
+        )
+          errorMessage = "User Already exist, try sign in";
+        else {
+          errorMessage = "check your internet and try again later";
+        }
+
         dispatch({ type: "AUTH_ERROR", payload: errorMessage });
       });
   };
 export const signOut = () => {
   auth.signOut();
+  localStorage.clear();
+  history.replace("/");
   return {
     type: "SIGN_OUT",
   };

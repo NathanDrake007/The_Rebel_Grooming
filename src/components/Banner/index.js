@@ -1,11 +1,19 @@
 import React from "react";
-import "./banner.css";
-
-function Banner(props) {
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+function Banner() {
+  const images = [
+    "https://firebasestorage.googleapis.com/v0/b/rebel-grooming.appspot.com/o/Banners%2FhomeBanner.jpg?alt=media&token=1a59bddb-dd67-43be-b113-f6bf1f3ca4bf",
+    "https://firebasestorage.googleapis.com/v0/b/rebel-grooming.appspot.com/o/Banners%2FhomeBanner-2.jpg?alt=media&token=4943161b-dc09-4ea7-a6d3-45f4595c1b6d",
+  ];
   return (
-    <section className="banner">
-      <img className="banner-image" src={props.image} alt="banner" />
-    </section>
+    <Carousel autoPlay infiniteLoop showIndicators={false} showThumbs={false}>
+      {images.map((image, index) => (
+        <div key={`bannerImage-${index}`}>
+          <img src={image} alt={`bannerImage-${index}`} />
+        </div>
+      ))}
+    </Carousel>
   );
 }
 

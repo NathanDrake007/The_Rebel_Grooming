@@ -11,6 +11,7 @@ import CheckoutPage from "./pages/CheckoutPage";
 import OrderPage from "./pages/OrderPage";
 import CartPage from "./pages/CartPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import PageError from "./pages/PageError";
 import "./app.css";
 
 //utils
@@ -23,8 +24,6 @@ import { signOut, setUser } from "./redux/actions/authActions";
 
 //layout
 import MainLayout from "./layouts/MainLayout";
-
-//hoc
 
 // stripe
 import { Elements } from "@stripe/react-stripe-js";
@@ -43,9 +42,6 @@ function App(props) {
         props.setUser(userAuth.uid);
       }
     });
-    // return () => {
-    //   authListener();
-    // };
   }, [props]);
 
   return (
@@ -132,6 +128,7 @@ function App(props) {
                 </Elements>
               )}
             />
+            <Route component={PageError} />
           </Switch>
         </ScrollToTop>
       </Router>

@@ -5,12 +5,10 @@ import storage from "redux-persist/lib/storage";
 // reducers
 import authReducer from "./authReducer";
 import cartReducer from "./cartReducer";
-import orderReducer from "./orderReducer";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   cart: cartReducer,
-  orders: orderReducer,
 });
 const configStorage = {
   key: "root",

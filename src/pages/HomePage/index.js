@@ -4,14 +4,19 @@ import Banner from "../../components/Banner";
 import Product from "../../components/Product";
 import { firestore } from "../../utils/firebase";
 import highlights from "../../assets/pictures/brand-highlights.jpg";
+import DataErrorPage from "../DataErrorPage";
+import Popup from "../../components/Popup";
 
-import bannerImage from "../../assets/pictures/homeBanner.jpg";
 import displayHeading2 from "../../assets/pictures/displayHeading-2.jpg";
 import displayHeading1 from "../../assets/pictures/displayHeading-1.jpg";
 import Loading from "../../components/Loading";
+import NewsLetterModal from "../../components/NewsLetterModal";
 
-function HomePage(props) {
+function HomePage() {
   const [products, setProducts] = useState([]);
+  const [hasError, setHasError] = useState(false);
+  const [openNews, setOpenNews] = useState(false);
+  const [open, setOpen] = useState(false);
   useEffect(() => {
     async function fetchProducts() {
       var temp = [];
@@ -25,20 +30,31 @@ function HomePage(props) {
               id: doc.id,
             });
           });
+        })
+        .catch((error) => {
+          setHasError(true);
         });
       setProducts(temp);
     }
     fetchProducts();
+    setTimeout(() => {
+      setOpenNews(true);
+      // console.log(openNews);
+    }, 5000);
   }, []);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   const renderPage = () => {
     return (
-      <div className="homePage">
-        <Banner
-          title="Rebel Gromming"
-          description="Sint et irure sunt aute officia mollit. Sint veniam sint amet minim sunt duis incididunt minim laborum laborum. Do duis ad quis ea consequat."
-          image={bannerImage}
-        />
+      <div>
+        {openNews ? <NewsLetterModal setOpenNews={setOpenNews} /> : null}
+        <Banner />
         <img
           src={displayHeading1}
           alt="displayheading-1"
@@ -46,11 +62,11 @@ function HomePage(props) {
         />
         <div id="main" className="container-fluid">
           {products.map((_product, index) => (
-            <div className="row">
+            <div className="row" key={_product.id}>
               <Product
                 product={_product}
-                key={_product.id}
                 rev={index % 2 === 1 ? true : false}
+                setOpen={setOpen}
               />
             </div>
           ))}
@@ -59,14 +75,27 @@ function HomePage(props) {
           src={displayHeading2}
           alt="displayheading-2"
           className="img-fluid"
+          width="100%"
         />
         <div className="container-fluid bg-white">
-          <img src={highlights} alt="highlights" className="img-fluid" />
+          <img
+            src={highlights}
+            alt="highlights"
+            className="img-fluid"
+            width="100%"
+          />
         </div>
+        <Popup text="Added to Cart" handleClose={handleClose} open={open} />
       </div>
     );
   };
-  return products.length !== 0 ? renderPage() : <Loading />;
+  return hasError ? (
+    <DataErrorPage />
+  ) : products.length !== 0 ? (
+    renderPage()
+  ) : (
+    <Loading />
+  );
 }
 const mapStateToProps = (state) => {
   return { isSignedIn: state.auth.isSignedIn };

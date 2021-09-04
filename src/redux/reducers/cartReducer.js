@@ -1,6 +1,5 @@
 const initalState = {
   products: [],
-  totalPrice: 0.0,
 };
 
 const cartReducer = (state = initalState, action) => {
@@ -8,32 +7,27 @@ const cartReducer = (state = initalState, action) => {
     case "ADD_TO_CART":
       return {
         ...state,
-        products: action.payload.cart,
-        totalPrice: action.payload.price,
+        products: action.payload,
       };
     case "REMOVE_FROM_CART":
       return {
         ...state,
-        products: action.payload.cart,
-        totalPrice: action.payload.price,
+        products: action.payload,
       };
     case "CLEAR_CART":
       return {
         ...state,
         products: [],
-        totalPrice: 0,
       };
     case "INCREASE_QUANTITY":
       return {
         ...state,
         products: action.payload.newCart,
-        totalPrice: action.payload.price,
       };
     case "DECREASE_QUANTITY":
       return {
         ...state,
         products: action.payload.newCart,
-        totalPrice: action.payload.price,
       };
     default:
       return state;

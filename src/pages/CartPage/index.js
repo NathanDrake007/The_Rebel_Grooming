@@ -1,26 +1,67 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-import "./style.css";
-import HairPomadeIcon from "../../assets/pictures/hairPomadeFront.png";
-import {
-  increaseQuantity,
-  decreaseQuantity,
-  removeFromCart,
-} from "../../redux/actions/cartActions";
+import { removeFromCart } from "../../redux/actions/cartActions";
+import { firestore } from "../../utils/firebase";
+import DataErrorPage from "../DataErrorPage";
+
 function CartPage(props) {
+  const [products, setProducts] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [hasError, setHasError] = useState(false);
+  useEffect(() => {
+    async function fetchProducts() {
+      var temp = [];
+      var _totalPrice = 0;
+      await firestore
+        .collection("products")
+        .get()
+        .then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            const product = props.products.find((p) => p.id === doc.id);
+            if (product) {
+              const { title, price, size, icon } = doc.data();
+              _totalPrice += parseInt(price) * product.quantity;
+              temp.push({ title, price, size, icon, ...product });
+            }
+          });
+          setTotalPrice(_totalPrice);
+        })
+        .catch((error) => setHasError(true));
+      setProducts(temp);
+    }
+    fetchProducts();
+  }, [props.products]);
+
+  const increaseQuantity = (productId) => {
+    var temp = products;
+    const index = temp.findIndex((p) => p.id === productId);
+    temp[index].quantity += 1;
+    setTotalPrice(parseInt(temp[index].price) + totalPrice);
+    setProducts(temp);
+  };
+  const decreaseQuantity = (productId) => {
+    var temp = products;
+    const index = temp.findIndex((p) => p.id === productId);
+    temp[index].quantity -= 1;
+    setTotalPrice(totalPrice - parseInt(temp[index].price));
+    if (temp[index].quantity === 0) {
+      props.removeFromCart(temp[index].id);
+    } else {
+      setProducts(temp);
+    }
+  };
   const renderCart = () => {
-    console.log("rr", props.products);
     return (
       <div className="container my-5">
         <h1>Shopping Cart</h1>
         <hr />
-        {props.products.map((product, index) => (
+        {products.map((product, index) => (
           <div key={index} className="container color-1">
             <div className="row align-items-center">
               <div className="col-4 col-md-2">
                 <img
-                  src={HairPomadeIcon}
+                  src={product.icon}
                   alt={product.title}
                   className="img-fluid"
                   width="100"
@@ -37,7 +78,7 @@ function CartPage(props) {
                       <button
                         type="button"
                         className="btn button bgcolor-3 fw-bolder"
-                        onClick={() => props.decreaseQuantity(product.id)}
+                        onClick={() => decreaseQuantity(product.id)}
                       >
                         -
                       </button>
@@ -45,7 +86,7 @@ function CartPage(props) {
                       <button
                         type="button"
                         className="btn button bgcolor-3 fw-bolder"
-                        onClick={() => props.increaseQuantity(product.id)}
+                        onClick={() => increaseQuantity(product.id)}
                       >
                         +
                       </button>
@@ -74,7 +115,7 @@ function CartPage(props) {
           <div className="container border-bottom border-secondary border-2 p-3 col-md-4">
             <div className="d-flex mb-3">
               <h4 className="me-3">TOTAL :</h4>
-              <strong className="fs-5">&#8377;{props.totalPrice}</strong>
+              <strong className="fs-5">&#8377;{totalPrice}</strong>
             </div>
             <Link to="/checkout" className="btn button bgcolor-1 w-100">
               Proceed to Checkout
@@ -107,18 +148,21 @@ function CartPage(props) {
       </div>
     );
   };
-  return props.products.length === 0 ? renderEmptyCart() : renderCart();
+  return hasError ? (
+    <DataErrorPage />
+  ) : products.length === 0 ? (
+    renderEmptyCart()
+  ) : (
+    renderCart()
+  );
 }
 const mapStateToProps = (state) => {
   return {
     products: state.cart.products,
-    totalPrice: state.cart.totalPrice,
     isSignedIn: state.auth.isSignedIn,
     userId: state.auth.userId,
   };
 };
 export default connect(mapStateToProps, {
-  increaseQuantity,
-  decreaseQuantity,
   removeFromCart,
 })(CartPage);

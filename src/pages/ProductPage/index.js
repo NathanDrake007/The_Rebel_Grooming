@@ -4,15 +4,17 @@ import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions/cartActions";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavBar";
-import hairPutty from "../../assets/pictures/hairPutty-1.jpg";
 import htuDisplay from "../../assets/pictures/htuDisplay.jpg";
 import Loading from "../../components/Loading";
 import Popup from "../../components/Popup";
+import DataErrorPage from "../DataErrorPage";
+import { useHistory } from "react-router-dom";
 
 function ProductPage(props) {
   const [product, setProduct] = useState(null);
   const [open, setOpen] = React.useState(false);
-
+  const [hasError, setHasError] = useState(false);
+  const history = useHistory();
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -28,29 +30,32 @@ function ProductPage(props) {
         .doc(props.match.params.id)
         .get()
         .then((doc) => {
-          setProduct(doc.data());
+          setProduct({ id: doc.id, ...doc.data() });
         })
         .catch((error) => {
-          console.log("Error getting document:", error);
+          setHasError(true);
         });
     }
     fetchProducts();
   }, [props.match.params.id]);
 
   const addToCart = () => {
-    const { title, price, image, size } = product;
-    props.addToCart({ title, price, image, size, quantity: 1 });
+    props.addToCart({ id: product.id, quantity: 1 });
     setOpen(true);
+  };
+  const handleBuy = () => {
+    props.addToCart({ id: product.id, quantity: 1 });
+    history.push("/checkout");
   };
   const renderPage = () => {
     return (
       <>
         <Navbar />
-        <div className="position-fixed bottom-0 p-3 bgcolor-2 row w-100 color-1 align-items-center">
+        <div className="position-fixed bottom-0 p-3 ms-0 bgcolor-2 row w-100 color-1 align-items-center z-index-2">
           <div className="col-md-6 d-flex align-items-center justify-content-center">
             <h1 className="me-3">{product.title.toUpperCase()}</h1>
             <p className="fs-5 me-2">
-              <s className="text-danger">&#8377;750</s>
+              <s className="text-danger">&#8377;{product.mrp}</s>
             </p>
             <p className="fs-2 me-2 text-white fw-bold">
               &#8377;{product.price} only
@@ -58,7 +63,7 @@ function ProductPage(props) {
             <p className="fs-5">{product.size}</p>
           </div>
           <div className="col-md-6 justify-content-center d-flex">
-            <button type="button" className="button-1">
+            <button type="button" className="button-1" onClick={handleBuy}>
               BUY NOW
             </button>
             <button type="button" className="button-2" onClick={addToCart}>
@@ -71,41 +76,42 @@ function ProductPage(props) {
             <div className="row">
               <div className="col-12 d-block d-xl-none mb-3">
                 <img
-                  src={hairPutty}
+                  src={product.images[1]}
                   alt="img-2"
                   className="image-fluid"
                   width="100%"
                 />
               </div>
               <div className="col-md-6 col-12">
-                <h1 className="fs-1">NATURAL SHINE</h1>
+                <h1 className="fs-1">{product.subtitles[0]}</h1>
                 <p className="fs-4">{product.description_1}</p>
-                <h1 className="fs-1">MADE WITH..</h1>
+                <h1 className="fs-1">{product.subtitles[1]}</h1>
                 <p className="fs-4">{product.description_2}</p>
-                <h1 className="fs-1">SMOOTH HAIR</h1>
+                <h1 className="fs-1">{product.subtitles[2]}</h1>
                 <p className="fs-4">{product.description_3}</p>
-                <h1 className="fs-1">EFFORTLESS STYLE</h1>
+                <h1 className="fs-1">{product.subtitles[3]}</h1>
                 <p className="fs-4">{product.description_4}</p>
               </div>
               <div className="col-md-6 position-relative d-none d-xl-block">
                 <img
-                  src={hairPutty}
+                  src={product.images[0]}
                   alt="img-1"
                   className="image-fluid rounded-circle position-absolute top-0 end-0 z-index-2"
-                  width="150"
+                  width="200"
                   height="150"
                 />
                 <img
-                  src={hairPutty}
+                  src={product.images[1]}
                   alt="img-2"
                   className="image-fluid position-absolute top-0 m-5 end-0 z-index-1"
                   width="500"
                 />
                 <img
-                  src={hairPutty}
+                  src={product.images[2]}
                   alt="img-3"
-                  className="image-fluid position-absolute top-50 end-0 mt-5 z-index-0"
-                  width="200"
+                  className="image-fluid z-index-0"
+                  width="300"
+                  style={{ position: "absolute", right: "-20px", top: "300px" }}
                 />
               </div>
             </div>
@@ -143,19 +149,19 @@ function ProductPage(props) {
           </div>
           <div className="container-fluid d-md-flex py-5">
             <img
-              src={hairPutty}
+              src={product.model_1}
               alt="img-2"
               className="image-fluid d-block d-md-none d-xl-none"
               width="100%"
             />
             <img
-              src={hairPutty}
+              src={product.model_1}
               alt="img-2"
               className="image-fluid flex-fill d-none d-md-block d-xl-block"
               width="500"
             />
             <img
-              src={hairPutty}
+              src={product.model_2}
               alt="img-2"
               className="image-fluid flex-fill d-none d-md-block d-xl-block"
               width="500"
@@ -163,9 +169,7 @@ function ProductPage(props) {
           </div>
           <div className="container p-5 d-flex flex-column flex-md-row color-1 my-2 justify-content-center align-items-md-end">
             <h1 className="me-3 ">INGREDIENTS</h1>
-            <p className="fs-4">
-              beeswax,kaolin clay, shea butter, jojoba oil, vitamin e oil
-            </p>
+            <p className="fs-4">{product.ingredients}</p>
           </div>
         </div>
         <Popup text="Added to Cart" handleClose={handleClose} open={open} />
@@ -174,7 +178,7 @@ function ProductPage(props) {
     );
   };
 
-  return product ? renderPage() : <Loading />;
+  return hasError ? <DataErrorPage /> : product ? renderPage() : <Loading />;
 }
 
 export default connect(null, { addToCart })(ProductPage);

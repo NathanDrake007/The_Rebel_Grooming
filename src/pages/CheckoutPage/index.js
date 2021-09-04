@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
@@ -12,8 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "../../components/AddressForm";
 import PaymentForm from "../../components/PaymentForm";
 import Review from "../../components/Review";
-import SavedAddress from "../../components/SavedAddress";
-
+import Loading from "../../components/Loading";
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
@@ -54,8 +52,11 @@ function CheckoutPage(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingDetails, setShippingDetails] = useState(null);
-  const [save, setSave] = useState(false);
-
+  const [loading, setLoading] = useState(true);
+  const [discount, setDiscount] = useState(0);
+  const [couponCode, setCouponCode] = useState(null);
+  const history = useHistory();
+  console.log(shippingDetails);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -63,7 +64,17 @@ function CheckoutPage(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  return (
+
+  useEffect(() => {
+    if (props.isSignedIn) {
+      setLoading(false);
+    } else {
+      history.replace("/signin");
+    }
+  }, [history, props.isSignedIn, props.products]);
+  return loading ? (
+    <Loading />
+  ) : (
     <React.Fragment>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
@@ -88,38 +99,35 @@ function CheckoutPage(props) {
                   order confirmation, and will send you an update when your
                   order has shipped.
                 </Typography>
-                <Link to="/orders" className="cartBtn">
+                <Link to="/orders" className="button-1 me-2">
                   View Orders
                 </Link>
-                <Link to="/" className="cartBtn">
+                <Link to="/" className="button-2">
                   Home
                 </Link>
               </React.Fragment>
             ) : (
               <React.Fragment>
                 {activeStep === 0 ? (
-                  <SavedAddress
+                  <AddressForm
                     setShippingDetails={setShippingDetails}
                     handleNext={handleNext}
                   />
                 ) : activeStep === 1 ? (
-                  <AddressForm
-                    setShippingDetails={setShippingDetails}
-                    handleNext={handleNext}
-                    setSave={setSave}
-                  />
-                ) : activeStep === 2 ? (
                   <Review
                     shippingDetails={shippingDetails}
                     handleBack={handleBack}
                     handleNext={handleNext}
+                    setDiscount={setDiscount}
+                    setCouponCode={setCouponCode}
                   />
-                ) : activeStep === 3 ? (
+                ) : activeStep === 2 ? (
                   <PaymentForm
                     shippingDetails={shippingDetails}
                     handleBack={handleBack}
                     handleNext={handleNext}
-                    save={save}
+                    discount={discount}
+                    couponCode={couponCode}
                   />
                 ) : null}
               </React.Fragment>
@@ -130,9 +138,11 @@ function CheckoutPage(props) {
     </React.Fragment>
   );
 }
+
 const mapStateToProps = (state) => {
   return {
-    orderId: state.orders.lastOrder,
+    isSignedIn: state.auth.isSignedIn,
+    products: state.cart.products,
   };
 };
 export default connect(mapStateToProps, null)(CheckoutPage);
