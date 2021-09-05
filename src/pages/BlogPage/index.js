@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { firestore } from "../../utils/firebase";
 import blogDisplay from "../../assets/pictures/blogDisplay.jpg";
-import temp from "../../assets/pictures/hairPutty-1.jpg";
 import Loading from "../../components/Loading";
 import DataErrorPage from "../DataErrorPage";
 
@@ -44,7 +43,7 @@ function BlogPage() {
                 className="text-decoration-none"
               >
                 <div class="container text-center color-1">
-                  <img src={temp} class="card-img-top" alt="..." />
+                  <img src={blog.thumbnail} class="card-img-top" alt="..." />
                   <div class="card-body">
                     <p class="card-text">
                       <small class="text-muted">{blog.date}</small>

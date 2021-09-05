@@ -36,39 +36,20 @@ function AboutPage() {
       <div className="container">
         <h1 className="fs-1">WHY REBEL GROOMING?</h1>
         <p className="fs-4">
-          the reble grooming co aims at delivering premium grooming,
-          stylingOfficia eu et proident nostrud occaecat officia consequat
-          adipisicing est est consectetur culpa. Excepteur dolor elit pariatur
-          laboris et exercitation cillum consectetur excepteur et do. Duis magna
-          ad labore amet dolore anim ea voluptate occaecat non. Nostrud dolor
-          amet exercitation nostrud ad fugiat adipisicing reprehenderit
-          voluptate ex quis. Veniam incididunt ad officia incididunt laborum do
-          et sunt commodo Lorem esse veniam. Cillum magna pariatur proident
-          nostrud deserunt quis sit ipsum.
+          The rebel grooming co aims at delivering premium grooming, styling,
+          and self-care products exclusively for men. So, you don't have to feel
+          left out, cause we have got you covered.
         </p>
         <p className="fs-4">
-          the reble grooming co aims at delivering premium grooming, styling
-          Consequat ullamco voluptate nisi fugiat esse sit. Dolor culpa magna
-          duis ut esse nulla ex ut sint ex reprehenderit ea duis. Ea occaecat
-          consequat nostrud cupidatat deserunt culpa pariatur eu aute incididunt
-          ut est est. Irure ad tempor ad ullamco Lorem ad.
+          Our products are made from natural ingredients that do not cause any
+          side effects. Everything you buy here is uniquely formulated to give
+          you the best results. Thus, charming look without any compromise.
         </p>
         <p className="fs-4">
-          the reble grooming co aims at delivering premium grooming, styling
-          Veniam dolor eu anim velit mollit sunt sunt voluptate enim pariatur
-          in. Est consectetur commodo irure ex ipsum ipsum do ea sunt incididunt
-          ad magna. Ut qui duis ex occaecat ea irure labore cillum nostrud nisi
-          voluptate consectetur.
-        </p>
-        <p className="fs-4">
-          the reble grooming co aims at delivering premium grooming, styling
-          Quis aliquip dolor id amet quis dolore in consectetur eiusmod ex
-          officia proident dolor. Proident nostrud dolore dolor laboris qui
-          reprehenderit magna aliqua quis. Quis ad ut est veniam deserunt
-          nostrud. Duis ut duis officia anim elit nisi aliquip consequat
-          deserunt. Sint incididunt est aute reprehenderit adipisicing enim
-          adipisicing. Anim dolor dolore esse culpa excepteur velit in amet
-          nostrud esse.
+          All the products of the rebel grooming co are easy to use. all it
+          takes is a few seconds to look your best for the day. As already said,
+          our products are made from natural ingredients, organic methods, and
+          we are cruelty-free. So, we do good for you and the environment.
         </p>
       </div>
       <div className="d-none d-xl-block d-md-block">
