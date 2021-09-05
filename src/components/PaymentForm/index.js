@@ -32,6 +32,8 @@ function PaymentForm(props) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [loading, setLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("cod");
+  const [cardError, setCardError] = useState(false);
+  const [enableButton, setEnableButton] = useState(false);
 
   const configCardElement = {
     iconStyle: "solid",
@@ -65,7 +67,13 @@ function PaymentForm(props) {
     fetchProducts();
   }, [props.products, props.discount]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
     setLoading(true);
     const { shippingDetails } = props;
     if (selectedValue === "card") {
@@ -77,7 +85,6 @@ function PaymentForm(props) {
             ...shippingDetails,
           },
         })
-        .catch((error) => console.log(error))
         .then(({ data: clientSecret }) => {
           stripe
             .createPaymentMethod({
@@ -87,27 +94,33 @@ function PaymentForm(props) {
                 ...shippingDetails,
               },
             })
+            .catch(({ error }) => console.log("error", error))
             .then(({ paymentMethod }) => {
-              stripe
-                .confirmCardPayment(clientSecret, {
-                  payment_method: paymentMethod.id,
-                })
-                .then(async () => {
-                  const date = new Date().toDateString();
-                  const newOrder = {
-                    orderTotal: totalPrice,
-                    paymentMode: "CARD",
-                    payment_Id: paymentMethod.id,
-                    date,
-                    userId: props.userId,
-                    orderItems: props.products,
-                    couponCode: props.couponCode,
-                  };
-                  props.clearCart();
-                  await firestore.collection("orders").add(newOrder);
-                  setLoading(false);
-                  props.handleNext();
-                });
+              if (paymentMethod) {
+                stripe
+                  .confirmCardPayment(clientSecret, {
+                    payment_method: paymentMethod.id,
+                  })
+                  .then(async () => {
+                    const date = new Date().toDateString();
+                    const newOrder = {
+                      orderTotal: totalPrice,
+                      paymentMode: "CARD",
+                      payment_Id: paymentMethod.id,
+                      date,
+                      userId: props.userId,
+                      orderItems: props.products,
+                      couponCode: props.couponCode,
+                    };
+                    props.clearCart();
+                    await firestore.collection("orders").add(newOrder);
+                    setLoading(false);
+                    props.handleNext();
+                  });
+              } else {
+                setCardError(true);
+                setLoading(false);
+              }
             });
         });
     } else if (selectedValue === "cod") {
@@ -144,6 +157,15 @@ function PaymentForm(props) {
     }
   };
 
+  const handleChange = (event) => {
+    if (event.complete) {
+      setEnableButton(false);
+      setCardError(false);
+    } else if (event.error) {
+      setEnableButton(true);
+      setCardError(true);
+    }
+  };
   const renderNewCard = () => {
     return (
       <>
@@ -160,7 +182,13 @@ function PaymentForm(props) {
                 aria-label="payment"
                 name="payment1"
                 value={selectedValue}
-                onChange={(e) => setSelectedValue(e.target.value)}
+                onChange={(e) => {
+                  setSelectedValue(e.target.value);
+                  if (e.target.value === "cod") {
+                    setEnableButton(false);
+                    setCardError(false);
+                  } else setEnableButton(true);
+                }}
               >
                 <FormControlLabel
                   value="cod"
@@ -180,7 +208,13 @@ function PaymentForm(props) {
               <Typography variant="h6" gutterBottom>
                 Credit / Debit Card
               </Typography>
-              <CardElement options={configCardElement} />
+              <CardElement
+                options={configCardElement}
+                onChange={handleChange}
+              />
+              {cardError ? (
+                <p className="text-danger">Check your card Details</p>
+              ) : null}
             </Grid>
           ) : null}
         </Grid>
@@ -200,6 +234,7 @@ function PaymentForm(props) {
           color="primary"
           onClick={handleSubmit}
           className={classes.button}
+          disabled={enableButton}
         >
           Place Order
         </Button>

@@ -14,20 +14,15 @@ const cartReducer = (state = initalState, action) => {
         ...state,
         products: action.payload,
       };
+    case "SET_PRODUCTS":
+      return {
+        ...state,
+        products: action.payload,
+      };
     case "CLEAR_CART":
       return {
         ...state,
         products: [],
-      };
-    case "INCREASE_QUANTITY":
-      return {
-        ...state,
-        products: action.payload.newCart,
-      };
-    case "DECREASE_QUANTITY":
-      return {
-        ...state,
-        products: action.payload.newCart,
       };
     default:
       return state;

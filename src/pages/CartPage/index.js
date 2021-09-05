@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { Link } from "react-router-dom";
-import { removeFromCart } from "../../redux/actions/cartActions";
+import { Link, useHistory } from "react-router-dom";
+import { removeFromCart, setProducts } from "../../redux/actions/cartActions";
 import { firestore } from "../../utils/firebase";
 import DataErrorPage from "../DataErrorPage";
 
@@ -9,6 +9,7 @@ function CartPage(props) {
   const [products, setProducts] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [hasError, setHasError] = useState(false);
+  const history = useHistory();
   useEffect(() => {
     async function fetchProducts() {
       var temp = [];
@@ -33,6 +34,18 @@ function CartPage(props) {
     fetchProducts();
   }, [props.products]);
 
+  const handleCheckout = (e) => {
+    e.preventDefault();
+    var temp = [];
+    products.forEach((product) => {
+      temp.push({
+        id: product.id,
+        quantity: product.quantity,
+      });
+    });
+    props.setProducts(temp);
+    history.push("/checkout");
+  };
   const increaseQuantity = (productId) => {
     var temp = products;
     const index = temp.findIndex((p) => p.id === productId);
@@ -117,9 +130,12 @@ function CartPage(props) {
               <h4 className="me-3">TOTAL :</h4>
               <strong className="fs-5">&#8377;{totalPrice}</strong>
             </div>
-            <Link to="/checkout" className="btn button bgcolor-1 w-100">
+            <button
+              onClick={handleCheckout}
+              className="btn button bgcolor-1 w-100"
+            >
               Proceed to Checkout
-            </Link>
+            </button>
           </div>
         </div>
       </div>
@@ -165,4 +181,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   removeFromCart,
+  setProducts,
 })(CartPage);

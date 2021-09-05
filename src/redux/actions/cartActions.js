@@ -13,7 +13,12 @@ export const removeFromCart = (productId) => (dispatch, getState) => {
   const cart = [...getState().cart.products].filter((p) => p.id !== productId);
   dispatch({ type: "REMOVE_FROM_CART", payload: cart });
 };
-
+export const setProducts = (products) => {
+  return {
+    type: "SET_PRODUCTS",
+    payload: products,
+  };
+};
 export const clearCart = () => {
   return {
     type: "CLEAR_CART",

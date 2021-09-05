@@ -25,7 +25,6 @@ app.post("/payments/create", async (req, res) => {
       currency: "INR",
       receipt_email: email,
     });
-
     res.status(200).send(paymentIntent.client_secret);
   } catch (err) {
     res.status(500).json({

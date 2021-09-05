@@ -56,7 +56,6 @@ function CheckoutPage(props) {
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState(null);
   const history = useHistory();
-  console.log(shippingDetails);
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
