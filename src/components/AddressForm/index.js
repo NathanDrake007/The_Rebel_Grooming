@@ -8,8 +8,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
 import { firestore } from "../../utils/firebase";
-import { useHistory } from "react-router-dom";
-
+import Loading from "../Loading";
 const useStyles = makeStyles((theme) => ({
   buttons: {
     display: "flex",
@@ -32,11 +31,11 @@ function AddressForm(props) {
   const [state, setState] = useState("");
   const [save, setSave] = useState(false);
   const [newAddress, setNewAddress] = useState(false);
-
   const [addressList, setAddressList] = useState([]);
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [index, setIndex] = useState("0");
+  const [loading, setLoading] = useState(true);
   function isNormalInteger(str) {
     return /^\+?(0|[1-9]\d*)$/.test(str);
   }
@@ -56,7 +55,6 @@ function AddressForm(props) {
       return true;
     }
   };
-  const history = useHistory();
   useEffect(() => {
     async function fetchAddress() {
       await firestore
@@ -77,13 +75,10 @@ function AddressForm(props) {
         });
     }
     if (props.isSignedIn) {
-      if (props.products.length === 0) {
-        history.replace("/cart");
-      } else {
-        fetchAddress();
-      }
-    } else history.replace("/signIn");
-  }, [props.userId, history, props.isSignedIn, props.products.length]);
+      fetchAddress();
+      setLoading(false);
+    }
+  }, [props.userId, props.isSignedIn]);
 
   const handleNext = () => {
     if (newAddress) {
@@ -267,7 +262,9 @@ function AddressForm(props) {
       </>
     );
   };
-  return (
+  return loading ? (
+    <Loading />
+  ) : (
     <>
       {renderSavedAddress()}
       {newAddress ? renderNewAddress() : null}

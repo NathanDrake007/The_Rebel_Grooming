@@ -36,6 +36,10 @@ function CartPage(props) {
 
   const handleCheckout = (e) => {
     e.preventDefault();
+    if (!props.isSignedIn) {
+      history.push("/signin");
+      return;
+    }
     var temp = [];
     products.forEach((product) => {
       temp.push({
@@ -84,7 +88,7 @@ function CartPage(props) {
                 <div className="row align-items-center justify-content-between">
                   <div className="col-md-3 text-center">
                     <h4>{product.title}</h4>
-                    <p>SIZE : {product.size}gm</p>
+                    <p>SIZE : {product.size}</p>
                   </div>
                   <div className="col-md-3 mb-3">
                     <div className="d-flex bgcolor-4 justify-content-between align-items-center">

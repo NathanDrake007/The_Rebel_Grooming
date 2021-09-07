@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 // material ui
 import { makeStyles } from "@material-ui/core/styles";
@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "../../components/AddressForm";
 import PaymentForm from "../../components/PaymentForm";
 import Review from "../../components/Review";
-import Loading from "../../components/Loading";
 const useStyles = makeStyles((theme) => ({
   layout: {
     width: "auto",
@@ -52,10 +51,8 @@ function CheckoutPage(props) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = useState(0);
   const [shippingDetails, setShippingDetails] = useState(null);
-  const [loading, setLoading] = useState(true);
   const [discount, setDiscount] = useState(0);
   const [couponCode, setCouponCode] = useState(null);
-  const history = useHistory();
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
@@ -64,16 +61,7 @@ function CheckoutPage(props) {
     setActiveStep(activeStep - 1);
   };
 
-  useEffect(() => {
-    if (props.isSignedIn) {
-      setLoading(false);
-    } else {
-      history.replace("/signin");
-    }
-  }, [history, props.isSignedIn, props.products]);
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <React.Fragment>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
