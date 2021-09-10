@@ -15,7 +15,7 @@ import PageError from "./pages/PageError";
 import "./app.css";
 
 //utils
-import { auth } from "./utils/firebase";
+import { auth, firestore } from "./utils/firebase";
 import history from "./utils/history";
 
 //redux
@@ -32,6 +32,7 @@ import { publishableKey } from "./utils/stripeConfig";
 import AboutPage from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
+import AdminPage from "./pages/AdminPage";
 
 const stripePromise = loadStripe(publishableKey);
 
@@ -39,7 +40,13 @@ function App(props) {
   useEffect(() => {
     auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
-        props.setUser(userAuth.uid);
+        firestore
+          .collection("users")
+          .doc(userAuth.uid)
+          .get()
+          .then((e) =>
+            props.setUser({ uid: userAuth.uid, role: e.data().role })
+          );
       }
     });
   }, [props]);
@@ -89,6 +96,14 @@ function App(props) {
               render={() => (
                 <MainLayout>
                   <SignInPage />
+                </MainLayout>
+              )}
+            />
+            <Route
+              path="/admin-easwar2001"
+              render={() => (
+                <MainLayout>
+                  <AdminPage />
                 </MainLayout>
               )}
             />

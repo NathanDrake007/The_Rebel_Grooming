@@ -7,8 +7,8 @@ import highlights from "../../assets/pictures/brand-highlights.jpg";
 import DataErrorPage from "../DataErrorPage";
 import Popup from "../../components/Popup";
 
-import displayHeading2 from "../../assets/pictures/displayHeading-2.jpg";
-import displayHeading1 from "../../assets/pictures/displayHeading-1.jpg";
+import displayHeading2 from "../../assets/pictures/displayHeading-2.png";
+import displayHeading1 from "../../assets/pictures/displayHeading-1.png";
 import Loading from "../../components/Loading";
 import NewsLetterModal from "../../components/NewsLetterModal";
 
@@ -58,7 +58,8 @@ function HomePage() {
         <img
           src={displayHeading1}
           alt="displayheading-1"
-          className="img-fluid"
+          // width="100%"
+          height="50%"
         />
         <div id="main" className="container-fluid">
           {products.map((_product, index) => (

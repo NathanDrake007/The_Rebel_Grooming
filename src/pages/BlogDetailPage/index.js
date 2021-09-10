@@ -40,14 +40,7 @@ function BlogDetailPage(props) {
         {blog.secondaryContent.map((item) => (
           <div className="text-start my-5">
             <h2 className="color-1">{item.title}</h2>
-            {item.content.map((con, index) => (
-              <div>
-                <h3 className="text-dark">
-                  {index + 1}. {con.title}
-                </h3>
-                <p className="fs-4 text-dark">{con.content}</p>
-              </div>
-            ))}
+            <h5>{item.content}</h5>
           </div>
         ))}
         <div className="d-flex align-items-center">

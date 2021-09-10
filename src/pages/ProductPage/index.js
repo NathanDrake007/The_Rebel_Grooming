@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import { addToCart } from "../../redux/actions/cartActions";
 import Footer from "../../components/Footer";
 import Navbar from "../../components/NavBar";
-import htuDisplay from "../../assets/pictures/htuDisplay.jpg";
+import htuDisplay from "../../assets/pictures/htuDisplay.png";
 import Loading from "../../components/Loading";
 import Popup from "../../components/Popup";
 import DataErrorPage from "../DataErrorPage";
@@ -93,26 +93,26 @@ function ProductPage(props) {
                 <p className="fs-4">{product.description_4}</p>
               </div>
               <div className="col-md-6 position-relative d-none d-xl-block">
-                <img
+                {/* <img
                   src={product.images[0]}
                   alt="img-1"
                   className="image-fluid rounded-circle position-absolute top-0 end-0 z-index-2"
                   width="200"
                   height="150"
-                />
+                /> */}
                 <img
                   src={product.images[1]}
                   alt="img-2"
                   className="image-fluid position-absolute top-0 m-5 end-0 z-index-1"
                   width="500"
                 />
-                <img
+                {/* <img
                   src={product.images[2]}
                   alt="img-3"
                   className="image-fluid z-index-0"
                   width="300"
                   style={{ position: "absolute", right: "-20px", top: "300px" }}
-                />
+                /> */}
               </div>
             </div>
           </div>

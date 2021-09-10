@@ -15,7 +15,7 @@ export const signIn =
       .signInWithEmailAndPassword(email, password)
       .then((userCredential) => {
         var userId = userCredential.user;
-        dispatch({ type: "SIGN_IN", payload: userId });
+        dispatch({ type: "SIGN_IN", payload: { uid: userId, role: "user" } });
         history.push("/");
       })
       .catch((error) => {
@@ -45,7 +45,7 @@ export const signUp =
           role: "user",
           auth: "manual",
         });
-        dispatch({ type: "SIGN_UP", payload: userId });
+        dispatch({ type: "SIGN_UP", payload: { uid: userId, role: "user" } });
         history.push("/");
       })
       .catch((error) => {

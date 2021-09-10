@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { firestore } from "../../utils/firebase";
-import blogDisplay from "../../assets/pictures/blogDisplay.jpg";
+import blogDisplay from "../../assets/pictures/blogDisplay.png";
 import Loading from "../../components/Loading";
 import DataErrorPage from "../DataErrorPage";
 

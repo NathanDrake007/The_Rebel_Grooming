@@ -56,6 +56,13 @@ function NavBar(props) {
                   Orders
                 </Link>
               </li>
+              {props.role === "admin" ? (
+                <li>
+                  <Link to="/admin-easwar2001" className="dropdown-item">
+                    Admin Panel
+                  </Link>
+                </li>
+              ) : null}
               <li>
                 {props.isSignedIn ? (
                   <button className="dropdown-item" onClick={handleSignOut}>
@@ -102,6 +109,6 @@ function NavBar(props) {
   );
 }
 const mapStateToProps = (state) => {
-  return { isSignedIn: state.auth.isSignedIn };
+  return { isSignedIn: state.auth.isSignedIn, role: state.auth.role };
 };
 export default connect(mapStateToProps, { signOut, clearCart })(NavBar);

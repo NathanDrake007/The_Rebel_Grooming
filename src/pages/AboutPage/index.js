@@ -4,7 +4,7 @@ import about1 from "../../assets/pictures/aboutbg-1.jpg";
 import about2 from "../../assets/pictures/aboutbg-2.jpg";
 import about3 from "../../assets/pictures/aboutbg-3.jpg";
 import highlights from "../../assets/pictures/brand-highlights.jpg";
-import displayHeading2 from "../../assets/pictures/displayHeading-2.jpg";
+import displayHeading2 from "../../assets/pictures/displayHeading-2.png";
 import Popup from "../../components/Popup";
 import { firestore } from "../../utils/firebase";
 import "./style.css";
