@@ -33,122 +33,131 @@ import AboutPage from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import AdminPage from "./pages/AdminPage";
+import InfluncerPage from "./pages/InfluncerPage";
 
 const stripePromise = loadStripe(publishableKey);
 
 function App(props) {
-  useEffect(() => {
-    auth.onAuthStateChanged((userAuth) => {
-      if (userAuth) {
-        firestore
-          .collection("users")
-          .doc(userAuth.uid)
-          .get()
-          .then((e) =>
-            props.setUser({ uid: userAuth.uid, role: e.data().role })
-          );
-      }
-    });
-  }, [props]);
+	useEffect(() => {
+		auth.onAuthStateChanged((userAuth) => {
+			if (userAuth) {
+				firestore
+					.collection("users")
+					.doc(userAuth.uid)
+					.get()
+					.then((e) =>
+						props.setUser({ uid: userAuth.uid, role: e.data().role })
+					);
+			}
+		});
+	}, [props]);
 
-  return (
-    <div className="app">
-      <Router history={history}>
-        <ScrollToTop>
-          <Switch>
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <MainLayout>
-                  <HomePage />
-                </MainLayout>
-              )}
-            />
-            <Route path="/product/:id" component={ProductPage} />
-            <Route
-              path="/signup"
-              render={() => (
-                <MainLayout>
-                  <SignupPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/about"
-              render={() => (
-                <MainLayout>
-                  <AboutPage />
-                </MainLayout>
-              )}
-            />
-            <Route path="/viewBlog/:id" component={BlogDetailPage} />
-            <Route
-              path="/blogs"
-              render={() => (
-                <MainLayout>
-                  <BlogPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/signin"
-              render={() => (
-                <MainLayout>
-                  <SignInPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/admin-easwar2001"
-              render={() => (
-                <MainLayout>
-                  <AdminPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/recovery"
-              render={() => (
-                <MainLayout>
-                  <ResetPasswordPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/cart"
-              render={() => (
-                <MainLayout>
-                  <CartPage />
-                </MainLayout>
-              )}
-            />
-            <Route
-              path="/checkout"
-              render={() => (
-                <Elements stripe={stripePromise}>
-                  <MainLayout>
-                    <CheckoutPage />
-                  </MainLayout>
-                </Elements>
-              )}
-            />
-            <Route
-              path="/orders"
-              render={() => (
-                <Elements stripe={stripePromise}>
-                  <MainLayout>
-                    <OrderPage />
-                  </MainLayout>
-                </Elements>
-              )}
-            />
-            <Route component={PageError} />
-          </Switch>
-        </ScrollToTop>
-      </Router>
-    </div>
-  );
+	return (
+		<div className="app">
+			<Router history={history}>
+				<ScrollToTop>
+					<Switch>
+						<Route
+							exact
+							path="/"
+							render={() => (
+								<MainLayout>
+									<HomePage />
+								</MainLayout>
+							)}
+						/>
+						<Route path="/product/:id" component={ProductPage} />
+						<Route
+							path="/signup"
+							render={() => (
+								<MainLayout>
+									<SignupPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/about"
+							render={() => (
+								<MainLayout>
+									<AboutPage />
+								</MainLayout>
+							)}
+						/>
+						<Route path="/viewBlog/:id" component={BlogDetailPage} />
+						<Route
+							path="/blogs"
+							render={() => (
+								<MainLayout>
+									<BlogPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/signin"
+							render={() => (
+								<MainLayout>
+									<SignInPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/admin-easwar2001"
+							render={() => (
+								<MainLayout>
+									<AdminPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/influencer"
+							render={() => (
+								<MainLayout>
+									<InfluncerPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/recovery"
+							render={() => (
+								<MainLayout>
+									<ResetPasswordPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/cart"
+							render={() => (
+								<MainLayout>
+									<CartPage />
+								</MainLayout>
+							)}
+						/>
+						<Route
+							path="/checkout"
+							render={() => (
+								<Elements stripe={stripePromise}>
+									<MainLayout>
+										<CheckoutPage />
+									</MainLayout>
+								</Elements>
+							)}
+						/>
+						<Route
+							path="/orders"
+							render={() => (
+								<Elements stripe={stripePromise}>
+									<MainLayout>
+										<OrderPage />
+									</MainLayout>
+								</Elements>
+							)}
+						/>
+						<Route component={PageError} />
+					</Switch>
+				</ScrollToTop>
+			</Router>
+		</div>
+	);
 }
 
 export default connect(null, { signOut, setUser })(App);
