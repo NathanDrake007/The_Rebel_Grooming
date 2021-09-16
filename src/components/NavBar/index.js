@@ -66,7 +66,7 @@ function NavBar(props) {
 							{props.role === "influencer" ? (
 								<li>
 									<Link to="/influencer" className="dropdown-item">
-										My Affiliate
+										Ambassador
 									</Link>
 								</li>
 							) : null}

@@ -9,6 +9,7 @@ function InfluncerPage(props) {
 	const [orders, setOrders] = useState(null);
 	const [hasError, setHasError] = useState(false);
 	const [total, setTotal] = useState(0);
+	const [discount, setDiscount] = useState(null);
 	useEffect(() => {
 		if (props.isSignedIn) {
 			if (props.role !== "influencer") {
@@ -24,6 +25,11 @@ function InfluncerPage(props) {
 		if (code === null) return;
 		var temp = [];
 		var _total = 0;
+		const coupon = await firestore
+			.collection("coupon")
+			.doc(code.toUpperCase())
+			.get();
+		setDiscount(parseInt(coupon.data().discount) / 100);
 		await firestore
 			.collection("orders")
 			.where("couponCode", "==", code.toUpperCase())
@@ -72,7 +78,7 @@ function InfluncerPage(props) {
 												type="submit"
 												className="btn button btn-block btn-lg bgcolor-1 w-100"
 											>
-												View Affiliate
+												View Ambassador
 											</button>
 										</div>
 									</form>
@@ -88,19 +94,22 @@ function InfluncerPage(props) {
 		return (
 			<div className="container my-5 color-1">
 				<div className="d-flex justify-content-between">
-					<h1>Your Affiliate Count : {orders.length}</h1>
-					<h1>Total Revenue Made : &#8377;{total}</h1>
+					<h1>Generated Orders : {orders.length}</h1>
+					<h1>Total Revenue Made : &#8377;{total * discount}</h1>
 				</div>
 				<div>
 					{orders.map((order) => (
-						<div className="row color-1 border-1 p-3 align-items-center">
+						<div
+							className="row color-1 border-1 p-3 align-items-center"
+							key={order.orderId}
+						>
 							<div className="col">
 								<h4>Order ID : {order.orderId}</h4>
 							</div>
 							<div className="col">Date : {order.date}</div>
 							<div className="col">OrderTotal : &#8377;{order.orderTotal}</div>
 							<div className="col">
-								Your Cut : &#8377;{order.orderTotal * 0.1}
+								Your Cut : &#8377;{order.orderTotal * discount}
 							</div>
 						</div>
 					))}
