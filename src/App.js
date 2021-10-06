@@ -25,17 +25,11 @@ import { signOut, setUser } from "./redux/actions/authActions";
 //layout
 import MainLayout from "./layouts/MainLayout";
 
-// stripe
-import { Elements } from "@stripe/react-stripe-js";
-import { loadStripe } from "@stripe/stripe-js";
-import { publishableKey } from "./utils/stripeConfig";
 import AboutPage from "./pages/AboutPage";
 import BlogPage from "./pages/BlogPage";
 import BlogDetailPage from "./pages/BlogDetailPage";
 import AdminPage from "./pages/AdminPage";
 import InfluncerPage from "./pages/InfluncerPage";
-
-const stripePromise = loadStripe(publishableKey);
 
 function App(props) {
 	useEffect(() => {
@@ -135,21 +129,17 @@ function App(props) {
 						<Route
 							path="/checkout"
 							render={() => (
-								<Elements stripe={stripePromise}>
-									<MainLayout>
-										<CheckoutPage />
-									</MainLayout>
-								</Elements>
+								<MainLayout>
+									<CheckoutPage />
+								</MainLayout>
 							)}
 						/>
 						<Route
 							path="/orders"
 							render={() => (
-								<Elements stripe={stripePromise}>
-									<MainLayout>
-										<OrderPage />
-									</MainLayout>
-								</Elements>
+								<MainLayout>
+									<OrderPage />
+								</MainLayout>
 							)}
 						/>
 						<Route component={PageError} />
