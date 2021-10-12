@@ -12,6 +12,11 @@ import OrderPage from "./pages/OrderPage";
 import CartPage from "./pages/CartPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import PageError from "./pages/PageError";
+import AboutPage from "./pages/AboutPage";
+import BlogPage from "./pages/BlogPage";
+import BlogDetailPage from "./pages/BlogDetailPage";
+import AdminPage from "./pages/AdminPage";
+import InfluncerPage from "./pages/InfluncerPage";
 import "./app.css";
 
 //utils
@@ -24,12 +29,6 @@ import { signOut, setUser } from "./redux/actions/authActions";
 
 //layout
 import MainLayout from "./layouts/MainLayout";
-
-import AboutPage from "./pages/AboutPage";
-import BlogPage from "./pages/BlogPage";
-import BlogDetailPage from "./pages/BlogDetailPage";
-import AdminPage from "./pages/AdminPage";
-import InfluncerPage from "./pages/InfluncerPage";
 
 function App(props) {
 	useEffect(() => {
